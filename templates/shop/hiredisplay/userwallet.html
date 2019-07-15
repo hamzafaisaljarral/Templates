@@ -505,7 +505,6 @@
 
                   <!-- End Account -->
 
-
                   <!-- About -->
                   <!--<li class="dropdown-item hs-has-sub-menu">
                     <a id="navLinkPagesAbout" class="nav-link u-header__sub-menu-nav-link u-list__link py-2" href="javascript:;"
@@ -1095,6 +1094,7 @@
 
       <div class="container u-space-1-top pb-3">
         <div class="row">
+
           <div class="col-lg-5 order-lg-2 text-lg-right mb-4 mb-lg-0">
             <div class="d-flex d-lg-inline-block justify-content-between justify-content-lg-end align-items-center align-items-lg-start">
               <!-- Breadcrumb -->
@@ -1119,23 +1119,24 @@
                 </button>
               </div>
               <!-- End Breadcrumb Nav Toggle Button -->
+
             </div>
           </div>
 
           <div class="col-lg-7 order-lg-1">
-			  {% with items=job|first %}
+			  {% with items=wallets|first %}
             <!-- User Info -->
             <div class="media d-block d-sm-flex align-items-sm-center">
               <div class="u-lg-avatar position-relative mb-3 mb-sm-0 mr-3">
-                <img class="u-lg-avatar rounded-circle" src="{{ items.hiredprofile.profileimage.url }}" alt="Image Description">
+                <img class="u-lg-avatar rounded-circle" src="{{ items.freelanceprofile.profileimage.url }}" alt="Image Description">
                 <span class="u-badge u-badge-border-success u-badge--md u-badge-pos--bottom-right-0 rounded-circle">
                   <span class="fa fa-check"></span>
                 </span>
               </div>
               <div class="media-body">
-                <h1 class="h3 text-white font-weight-medium mb-1">{{ items.hiredprofile.name }}!</h1>
-                <span class="d-block text-white">{{ items.hiredprofile.location }}</span>
-				  <a class ="btn btn-sm u-btn-white--air transition-3d-hover" href="{% url 'wallet' pk=items.pk %}">Check Wallet</a>
+                <h1 class="h3 text-white font-weight-medium mb-1">{{ items.freelanceprofile.name }}!</h1>
+                <span class="d-block text-white">{{ items.freelanceprofile.location }}</span>
+
               </div>
             </div>
 
@@ -1144,6 +1145,7 @@
           </div>
         </div>
       </div>
+
 		 <!-- Content Section -->
     <div class="u-bg-light-blue-50">
       <div class="container u-space-2">
@@ -1183,6 +1185,51 @@
         <div class="card-deck d-block d-md-flex">
           <!-- Members -->
 			 <div class="container">
+    <section>
+      <div class="row" id="tablerow">
+
+      <div class="col-md-8 col-xs-12">
+        <table class="table">
+          <tr>
+
+            <td><h4>Your Wallet</h4></td>
+          </tr>
+          <tr>
+            <td>
+               {% for items in wallets %}
+                <tr>
+                  <td>{{ items.paidby.name}}</td>
+                  <td>${{ items.pendingpayment }}</td>
+
+                </tr>
+			{% endfor %}
+			<tr>
+				<td>pending payment</td>
+                  <td>${{ total }}</td>
+			</tr>
+
+            </td>
+          </tr>
+
+
+          <tr>
+            <td><strong>Available for withdraw</strong> </td>
+            <td> <strong>${{ cash }}</strong></td>
+          </tr>
+
+
+
+
+
+        </table>
+
+
+       <button onclick = "window.location.href='{% url 'cashwithdraw' %}'">Cash Withdraw</button>
+
+
+      </div>
+     </div>
+    </section>
 
 
 
@@ -1191,61 +1238,6 @@
 
 
 
-			{% for items in job %}
-			{% if items.is_accepted == False and items.is_rejected == False %}
-
-          <div class="card mb-3 mb-5">
-            <div class="card-body text-center p-0">
-              <div class="py-4 px-6">
-                <!-- Team -->
-                <div class="mb-4">
-                  <div class="position-relative u-lg-avatar mx-auto mb-3">
-                    <img class="u-lg-avatar rounded-circle" src="{{ items.profileofjobpublisher.profileimage.url  }}" alt="Image Description">
-                    <span class="u-badge u-badge--xs u-badge-border-primary u-badge-pos--bottom-left-1 rounded-circle"></span>
-                  </div>
-
-                  <a class="u-icon u-icon-warning--air u-icon--sm u-bg-transparent position-absolute-top-right-0 rounded-circle m-3" href="javascript:;" data-toggle="tooltip" data-placement="top" title="Add to favorites">
-                    <span class="far fa-star u-icon__inner"></span>
-                  </a>
-
-                  <h2 class="h6 mb-0">
-                    <a href="#">{{ items.profileofjobpublisher.name }}</a>
-                  </h2>
-                  <a class="small" href="#">{{ items.profileofjobpublisher.location }}</a>
-					<h2 class="h6 mb-0">
-                    <a href="#">"{{ items.message }}"</a>
-                  </h2>
-					<h2 class="h6 mb-0">
-                    <a href="#">${{ items.price }}</a>
-                  </h2>
-
-
-                </div>
-                <!-- End Team -->
-
-                <!-- Social Networks -->
-
-                <!-- End Social Networks -->
-              </div>
-
-              <hr class="my-0">
-
-              <div class="py-4">
-
-                <a class="btn btn-sm u-btn-primary--air transition-3d-hover" href="{% url 'accepted' pk=items.pk  %}">
-                  <span class="fa fa-check mr-2"></span>
-                  Accept
-                </a>
-				  <a class="btn btn-sm u-btn-primary--air transition-3d-hover" href="{% url 'rejected' pk=items.pk  %}">
-                  <span class="fa fa-times mr-2"></span>
-                  Reject
-                </a>
-              </div>
-            </div>
-          </div>
-			{% endif %}
-          <!-- End Members -->
-          {% endfor %}
           <!-- Members -->
           <!--<div class="card mb-3 mb-5">
             <div class="card-body text-center p-0">
@@ -1951,125 +1943,6 @@
             </div>
           </div>
           <!-- End Activity Menu -->
-
-          <hr class="my-5">
-			<h2 class="large">Your Tasks</h2>
-
-          <!-- Activity Table -->
-          <div class="table-responsive-md u-datatable">
-            <table class="js-datatable table table-borderless u-datatable__striped u-datatable__content u-datatable__trigger mb-5"
-                   data-dt-info="#datatableInfo"
-                   data-dt-search="#datatableSearch"
-                   data-dt-entries="#datatableEntries"
-                   data-dt-page-length="12"
-                   data-dt-is-responsive="false"
-                   data-dt-is-show-paging="true"
-                   data-dt-details-invoker=".js-datatabale-details"
-                   data-dt-select-all-control="#invoiceToggleAllCheckbox"
-
-                   data-dt-pagination="datatablePagination"
-                   data-dt-pagination-classes="pagination mb-0"
-                   data-dt-pagination-items-classes="page-item"
-                   data-dt-pagination-links-classes="page-link"
-
-                   data-dt-pagination-next-classes="page-item"
-                   data-dt-pagination-next-link-classes="page-link"
-                   data-dt-pagination-next-link-markup='<span aria-hidden="true">&raquo;</span>'
-
-                   data-dt-pagination-prev-classes="page-item"
-                   data-dt-pagination-prev-link-classes="page-link"
-                   data-dt-pagination-prev-link-markup='<span aria-hidden="true">&laquo;</span>'>
-              <thead>
-                <tr class="text-uppercase font-size-14">
-                  <th scope="col">
-                    <div class="custom-control custom-checkbox d-flex align-items-center">
-                      <!--<input type="checkbox" class="custom-control-input" id="invoiceToggleAllCheckbox">
-                      <label class="custom-control-label" for="invoiceToggleAllCheckbox">
-                        <span class="text-hide">Checkbox</span>
-                      </label>-->
-                    </div>
-                  </th>
-                  <!--<th scope="col" class="font-weight-medium">
-                    <div class="d-flex justify-content-between align-items-center">
-                      Order
-                      <!--<div class="ml-2">
-                        <span class="fa fa-angle-up u-datatable__thead-icon"></span>
-                        <span class="fa fa-angle-down u-datatable__thead-icon"></span>
-                      </div>-->
-                   <!-- </div>
-                  </th>-->
-                  <th scope="col" class="font-weight-medium">
-                    <div class="d-flex justify-content-between align-items-center">
-                      Jobs
-                     <!-- <div class="ml-2">
-                        <span class="fa fa-angle-up u-datatable__thead-icon"></span>
-                        <span class="fa fa-angle-down u-datatable__thead-icon"></span>
-                      </div>-->
-                    </div>
-                  </th>
-                  <th scope="col" class="font-weight-medium">
-                    <div class="d-flex justify-content-between align-items-center">
-                      Amount
-                     <!-- <div class="ml-2">
-                        <span class="fa fa-angle-up u-datatable__thead-icon"></span>
-                        <span class="fa fa-angle-down u-datatable__thead-icon"></span>
-                      </div>-->
-                    </div>
-                  </th>
-                  <th scope="col" class="font-weight-medium">
-                    <div class="d-flex justify-content-between align-items-center">
-                      Freelancer
-                     <!-- <div class="ml-2">
-                        <span class="fa fa-angle-up u-datatable__thead-icon"></span>
-                        <span class="fa fa-angle-down u-datatable__thead-icon"></span>
-                      </div>-->
-                    </div>
-                  </th>
-                  <th scope="col" class="font-weight-medium">
-                    <div class="d-flex justify-content-between align-items-center">
-                      Status
-                      <!--<div class="ml-2">
-                        <span class="fa fa-angle-up u-datatable__thead-icon"></span>
-                        <span class="fa fa-angle-down u-datatable__thead-icon"></span>
-                      </div>-->
-                    </div>
-                  </th>
-                </tr>
-              </thead>
-				{% for items in job %}
-             <tbody class="font-size-14">
-                {% if items.is_accepted == True %}
-
-				{% if items.end_date.date >= time %}
-
-				<hr>
-
-
-
-
-
-			 <td class="align-middle text-secondary font-weight-normal u-datatable__trigger-icon">001</td>
-                  <td class="align-middle">
-                    <div class="media align-items-center">
-                      <span class="u-icon u-icon-success--air rounded-circle mr-2">
-                        <span class="u-icon__inner font-weight-medium">S</span>
-                      </span>
-						<span><a href="{% url 'displayjob_with_pk' pk=items.jobhiredfor.pk %}"> {{ items.jobhiredfor.type }}</a></span>
-                    </div>
-                  </td>
-                  <td class="align-middle text-primary">${{ items.price }}</td>
-                  <td class="align-middle text-secondary">{{ items.hiredprofile.name }}</td>
-			 {% if items.is_accepted == True %}
-                  <td class="align-middle text-danger">Accepted</td>
-			 {% endif %}
-			 {% if items.is_rejected == True %}
-			 <td class="align-middle text-danger">Rejected</td>
-			 {% endif %}
-			 {% if items.is_accepted == False and items.is_rejected == False %}
-			 <td class="align-middle text-danger">Pending</td>
-			 {% endif %}
-               {% endif %}
-				{% endif %}
 
 
                 <!--<tr class="js-datatabale-details" data-details='
@@ -4616,7 +4489,7 @@
                   <td class="align-middle text-success">Completed</td>-->
                <!-- </tr>-->
               </tbody>
-				{% endfor %}
+
             </table>
           </div>
           <!-- End Activity Table -->

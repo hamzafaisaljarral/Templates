@@ -305,7 +305,7 @@
                   data-animation-in="slideInUp"
                   data-animation-out="fadeOut"
                   data-position="left">-->
-                <a id="homeMegaMenu" class="nav-link u-header__nav-link pl-0" href="#"
+                <a id="homeMegaMenu" class="nav-link u-header__nav-link pl-0" href="../home/"
                    aria-haspopup="true"
                    aria-expanded="false">
                   Home
@@ -402,23 +402,53 @@
                    aria-haspopup="true"
                    aria-expanded="false"
                    aria-labelledby="pagesSubMenu">
-                  Pages
+                  Account
                   <span class="fa fa-angle-down u-header__nav-link-icon"></span>
                 </a>
 
                 <!-- Pages - Submenu -->
+                {% if user.is_authenticated %}
+						    {% if user.freelancer == True %}
                 <ul id="pagesSubMenu" class="list-inline hs-sub-menu u-header__sub-menu py-3 mb-0" style="min-width: 220px;"
                     aria-labelledby="pagesMegaMenu">
                   <!-- Account -->
-                  <li class="dropdown-item hs-has-sub-menu">
-                    <a id="navLinkPagesAccount" class="nav-link u-header__sub-menu-nav-link u-list__link py-2" href="javascript:;"
-                       aria-haspopup="true"
-                       aria-expanded="false"
-                       aria-controls="navSubmenuPagesAccount">
-                      Account
-                      <span class="badge badge-success ml-1">New</span>
-                      <span class="fa fa-angle-right u-header__sub-menu-nav-link-icon"></span>
+                  <li class="dropdown-item px-0">
+                    <a id="navLinkPagesAccount" class="nav-link u-header__sub-menu-nav-link u-list__link py-2" href="{% url 'profile_with_pk' pk=user.pk  %}"
+                       >
+                      Profile
                     </a>
+				  </li>
+				</ul>
+
+					  {% endif %}
+					  {% endif %}
+
+					  {% if user.is_authenticated %}
+						    {% if user.Jopublisher == True %}
+				<ul id="pagesSubMenu" class="list-inline hs-sub-menu u-header__sub-menu py-3 mb-0" style="min-width: 220px;"
+                    aria-labelledby="pagesMegaMenu">
+                  <li class="dropdown-item px-0">
+                    <a id="navLinkPagesAccount" class="nav-link u-header__sub-menu-nav-link u-list__link py-2" href="../userjoblist/"
+                       >
+                      Profile
+                    </a>
+				</li>
+				</ul>
+					  {% endif %}
+					  {% endif %}
+					{% if user.is_authenticated == False %}
+				<ul id="pagesSubMenu" class="list-inline hs-sub-menu u-header__sub-menu py-3 mb-0" style="min-width: 220px;"
+                    aria-labelledby="pagesMegaMenu">
+
+                  <li class="dropdown-item px-0">
+                    <a id="navLinkPagesAccount" class="nav-link u-header__sub-menu-nav-link u-list__link py-2" href="/login/"
+                       >
+                      Login First
+                    </a>
+				</li>
+				</ul>
+					  {% endif %}
+
 
                     <!-- Submenu (level 2) -->
 
@@ -428,22 +458,14 @@
                         <a class="nav-link u-list__link px-4" href="#">Dashboard</a>
                       </li>-->
                       <li class="dropdown-item px-0">
-                         {% if user.is_authenticated %}
-						    {% if user.freelancer == True %}
-                        <a class="nav-link u-list__link px-4" href="{% url 'profile_with_pk' pk=user.pk  %}">Your Profile</a>
-						   {% endif %}
-						  {% endif %}
+
+
 						  {% if user.is_authenticated %}
 						   {% if user.jopublisher == True %}
-						  <a class="nav-link u-list__link px-4" href="../profilelist/">Freelancers</a>
+						  <a class="nav-link u-list__link px-4" href="../userjoblist/">Profile</a>
 						   {% endif %}
 						  {% endif %}
-						  {% if user.is_authenticated == False %}
 
-                          <a class="nav-link u-list__link px-4" href="../login/">Login</a>
-						  or
-						  <a class="nav-link u-list__link px-4" href="../register/signup/">signup</a>
-                           {% endif %}
                       </li>
                       <!--<li class="dropdown-item px-0">
                         <a class="nav-link u-list__link px-4" href="#">My tasks</a>
@@ -478,9 +500,9 @@
                      <!-- <li class="dropdown-item px-0">
                         <a class="nav-link u-list__link px-4" href="#">API Token</a>
                       </li>-->
-                    </ul>
+
                     <!-- End Submenu (level 2) -->
-                  </li>
+
                   <!-- End Account -->
 
                   <!-- About -->
@@ -682,7 +704,7 @@
                 <a id="worksMegaMenu" class="nav-link u-header__nav-link" href="javascript:;"
                    aria-haspopup="true"
                    aria-expanded="false">
-                  Work
+                  Pages
                   <span class="fa fa-angle-down u-header__nav-link-icon"></span>
                 </a>
 
@@ -1414,6 +1436,7 @@
                 </tr>
               </thead>
 				{% for items in job %}
+				{% if items.end_date.date >= time %}
              <tbody class="font-size-14">
 
 			 <td class="align-middle text-secondary font-weight-normal u-datatable__trigger-icon">001</td>
@@ -1422,7 +1445,7 @@
                       <span class="u-icon u-icon-success--air rounded-circle mr-2">
                         <span class="u-icon__inner font-weight-medium">S</span>
                       </span>
-                      <span>{{ items.jobhiredfor.type }}</span>
+						<span><a href="{% url 'job_with_pk' pk=items.jobhiredfor.pk %}">{{ items.jobhiredfor.type }}</a></span>
                     </div>
                   </td>
                   <td class="align-middle text-primary">${{ items.price }}</td>
@@ -1435,6 +1458,7 @@
 			 {% endif %}
 			 {% if items.is_accepted == False and items.is_rejected == False %}
 			 <td class="align-middle text-danger">Pending</td>
+			 {% endif %}
 			 {% endif %}
 
 

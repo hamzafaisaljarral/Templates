@@ -1,48 +1,46 @@
-
 {% load static cms_tags i18n sekizai_tags sass_tags aldryn_forms_tags %}
-
 <!DOCTYPE html>
-<html lang="{{ LANGUAGE_CODE }}" ng-app="myShop">
+<html lang="en">
 <head>
-  <!-- Title -->
-   <title>{% block title %}Scoop Inside{% endblock %}</title>
+    <meta charset="UTF-8">
+    <title>Checkout</title>
+	 {% render_block "css"  %}
+     {% addtoblock "css" %}<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" type="text/css" rel="stylesheet">{% endaddtoblock %}
+    {% addtoblock "css" %}<link rel="stylesheet" type="text/css" href="{% static 'shop/css/checkout.css' %}">{% endaddtoblock %}
+	{% block css %}
+    <style>
+      #checkoutMethods {
+        background: #fff;
+        border-radius: 2px;
+        display: inline-block;
+        max-height: 700px;
+        margin: 1rem;
+        position: relative;
+        width: 700px;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
 
-  <!-- Required Meta Tags Always Come First -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-  <!-- Favicon -->
-  <link rel="shortcut icon" href="../../favicon.ico">
-
-{% block css %}
-
-     <style type="text/css">
-       #mapid { height: 580px; width: 1000px; align-center: True }
+      }
     </style>
-	<!--[if lt IE 9]><script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 	{% endblock css %}
- {% render_block "css"  %}
-  <!-- Google Fonts -->
-  <link href="//fonts.googleapis.com/css?family=Poppins:300,400,500,600" rel="stylesheet">
 
-  <!-- CSS Global Compulsory -->
-  {% addtoblock "css" %} <link rel="stylesheet" href="{% static 'assets/vendor/bootstrap/css/bootstrap.css' %}">{% endaddtoblock %}
-
+    {% addtoblock "css" %}<link rel="stylesheet" href="{% static 'assets/vendor/bootstrap/css/checkout.css' %}">{% endaddtoblock %}
   <!-- CSS Implementing Plugins -->
-  {% addtoblock "css" %} <link rel="stylesheet" href="{% static 'assets/vendor/font-awesome/css/fontawesome-all.min.css' %}">{% endaddtoblock %}
+  {% addtoblock "css" %}<link rel="stylesheet" href="{% static 'assets/vendor/font-awesome/css/fontawesome-all.min.css' %}">{% endaddtoblock %}
   {% addtoblock "css" %}<link rel="stylesheet" href="{% static 'assets/vendor/animate.css/animate.min.css' %}">{% endaddtoblock %}
   {% addtoblock "css" %}<link rel="stylesheet" href="{% static 'assets/vendor/hs-megamenu/src/hs.megamenu.css' %}">{% endaddtoblock %}
   {% addtoblock "css" %}<link rel="stylesheet" href="{% static 'assets/vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css' %}">{% endaddtoblock %}
-  {% addtoblock "css" %}<link rel="stylesheet" href="{% static 'assets/vendor/cubeportfolio/css/cubeportfolio.min.css' %}">{% endaddtoblock %}
-  {% addtoblock "css" %}<link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
-                       integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
-                       crossorigin=""/>{% endaddtoblock %}
-  <!-- CSS Front Template -->
- {% addtoblock "css" %}<link rel="stylesheet" href="{% static 'assets/css/front.css' %}">{% endaddtoblock %}
-</head>
+  {% addtoblock "css" %}<link rel="stylesheet" href="{% static 'assets/vendor/flatpickr/dist/flatpickr.min.css' %}">{% endaddtoblock %}
+  {% addtoblock "css" %}<link rel="stylesheet" href="{% static 'assets/vendor/bootstrap-select/dist/css/bootstrap-select.min.css' %}">{% endaddtoblock %}
 
-<body>
+  <!-- CSS Front Template -->
+  {% addtoblock "css" %}<link rel="stylesheet" href="{% static 'assets/css/front.css' %}">{% endaddtoblock %}
+
+
+
+
+</head>
 {% cms_toolbar %}
+<body class="u-custombox-no-scroll">
   <!-- Skippy -->
   <a id="skippy" class="sr-only sr-only-focusable u-skippy" href="#content">
     <div class="container">
@@ -52,7 +50,7 @@
   <!-- End Skippy -->
 
   <!-- ========== HEADER ========== -->
-  <header id="header" class="u-header">
+ <header id="header" class="u-header">
     <!-- Search -->
     <div id="searchPushTop" class="u-search-push-top">
       <div class="container position-relative">
@@ -419,7 +417,7 @@
                 </a>
 
                 <!-- Pages - Submenu -->
-               {% if user.is_authenticated %}
+                {% if user.is_authenticated %}
 						    {% if user.freelancer == True %}
                 <ul id="pagesSubMenu" class="list-inline hs-sub-menu u-header__sub-menu py-3 mb-0" style="min-width: 220px;"
                     aria-labelledby="pagesMegaMenu">
@@ -517,7 +515,6 @@
 
                   <!-- End Account -->
 
-
                   <!-- About -->
                   <!--<li class="dropdown-item hs-has-sub-menu">
                     <a id="navLinkPagesAbout" class="nav-link u-header__sub-menu-nav-link u-list__link py-2" href="javascript:;"
@@ -594,8 +591,7 @@
                   <!-- Careers -->
 
                   <!-- Login -->
-					<!--
-                  <li class="dropdown-item hs-has-sub-menu">
+                  <!--<li class="dropdown-item hs-has-sub-menu">
                     <a id="navLinkPagesLogin" class="nav-link u-header__sub-menu-nav-link u-list__link py-2" href="javascript:;"
                        aria-haspopup="true"
                        aria-expanded="false"
@@ -605,7 +601,7 @@
                     </a>
 
                     <!-- Submenu (level 2) -->
-                  <!--  <ul id="navSubmenuPagesLogin" class="hs-sub-menu list-unstyled u-header__sub-menu u-header__sub-menu-menu-gutter--y u-header__sub-menu-offset" style="min-width: 220px;"
+                    <!--<ul id="navSubmenuPagesLogin" class="hs-sub-menu list-unstyled u-header__sub-menu u-header__sub-menu-menu-gutter--y u-header__sub-menu-offset" style="min-width: 220px;"
                         aria-labelledby="navLinkPagesLogin">
                       <li class="dropdown-item px-0">
                         <a class="nav-link u-list__link px-4" href="#">Login Simple</a>
@@ -618,7 +614,7 @@
                       </li>
                     </ul>
                     <!-- End Submenu (level 2) -->
-                  <!--</li>
+                 <!-- </li>
                   <!-- Signup -->
 
                   <!-- Contacts -->
@@ -726,25 +722,25 @@
                 <div class="hs-mega-menu w-100 u-header__sub-menu u-header__mega-menu-wrapper-v1" aria-labelledby="worksMegaMenu">
                   <div class="row">
                     <div class="col-sm-6 col-lg-3 mb-3 mb-lg-0">
+                      <strong class="d-block mb-2">Jobs for you</strong>
 
-                      <strong class="d-block mb-2">Available for You</strong>
 
                       <!-- Links -->
                       <ul class="list-unstyled u-list">
-						  {% if user.is_authenticated %}
+						   {% if user.is_authenticated %}
 						    {% if user.freelancer == True %}
 						  <li><a class="nav-link u-list__link py-2 px-0" href="../joblist/">Jobs available</a></li>
 						   {% endif %}
 						  {% endif %}
 						  {% if user.is_authenticated %}
 						   {% if user.jopublisher == True %}
-						  <li><a class="nav-link u-list__link py-2 px-0" href="../profilelist/">Freelancer list</a></li>
+						  <li><a class="nav-link u-list__link py-2 px-0" href="../userjoblist/">Job posted</a></li>
 						   {% endif %}
 						  {% endif %}
 						  {% if user.is_authenticated == False %}
-						   <a class="nav-link u-list__link px-4" href="../joblist/">- Available jobs</a>
-						  <a class="nav-link u-list__link px-4" href="../profilelist/">- Available freelancer</a>
-
+						   <a class="nav-link u-list__link px-4" href="../login/">Login</a>
+						  or
+						  <a class="nav-link u-list__link px-4" href="../register/signup/">signup</a>
                           {% endif %}
                         <!--<li><a class="nav-link u-list__link py-2 px-0" href="../arts-crafts/">Art and Design</a></li>
                       <!--  <li><a class="nav-link u-list__link py-2 px-0" href="#">Career & jobs</a></li>
@@ -1072,7 +1068,7 @@
 
               <!-- Button -->
               <li class="nav-item d-none d-md-inline-block pl-3 pr-0">
-				  {% if user.is_authenticated %}
+                {% if user.is_authenticated %}
 				    {% if user.jopublisher == True %}
                 <a class="btn btn-sm btn-primary u-btn-primary transition-3d-hover" href="../ad-jobs/" target="_blank">
                   Post Job
@@ -1088,7 +1084,6 @@
 
 				   {% endif %}
 				  {% endif %}
-
               </li>
               <!-- End Button -->
             </ul>
@@ -1100,1088 +1095,100 @@
     </div>
   </header>
   <!-- ========== END HEADER ========== -->
-  <!-- ========== END HEADER ========== -->
-
-  <!-- ========== MAIN ========== -->
-
-  <main id="content" role="main">
-    <!-- Hero Section -->
-    <div class="position-relative u-bg-light-blue-50 overflow-hidden">
-
-
-
-          <div class="container position-relative u-space-4-top u-space-5-top--md u-space-4-bottom z-index-2" id="mapid"></div>
-
-<!-- Default map with 300x400 dimensions -->
-
-
-<!-- Variable address, custom detail level and custom template -->
 
 
 
 
 
 
-      <!-- SVG Background Left Top Shape -->
-      <figure class="w-100 w-md-75 w-lg-50 position-absolute-top-left-0 mx-auto">
-        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-             viewBox="0 0 900 919" style="enable-background:new 0 0 900 919;" xml:space="preserve">
-          <linearGradient id="heroPathID1" gradientUnits="userSpaceOnUse" x1="0" y1="501" x2="599" y2="501">
-            <stop class="u-stop-color-midnightblue" offset="7.500810e-08"/>
-            <stop class="u-stop-color-primary" offset="1"/>
-          </linearGradient>
-          <path fill="url(#heroPathID1)" d="M599,83c0,0-552.6,361-597.8,836L0,486.3C0,486.3,232.6,170,599,83z"/>
-          <path class="u-fill-danger" d="M1,919c0,0,164.2-790,683-919H229.8C229.8,0,1,257,1,577V919z"/>
-          <linearGradient id="heroPathID2" gradientUnits="userSpaceOnUse" x1="0" y1="196.5" x2="900" y2="196.5">
-            <stop class="u-stop-color-midnightblue" offset="0"/>
-            <stop class="u-stop-color-primary" offset="1"/>
-          </linearGradient>
-          <path fill="url(#heroPathID2)" d="M197,393c0,0,254-343,703-393H0L197,393z"/>
-          <linearGradient id="heroPathID3" gradientUnits="userSpaceOnUse" x1="0.5" y1="310.75" x2="562.3972" y2="310.75">
-            <stop class="u-stop-color-midnightblue" offset="0"/>
-            <stop class="u-stop-color-primary" offset="1"/>
-          </linearGradient>
-          <path fill="url(#heroPathID3)" d="M0.5,0.5V621c0,0,190.7-441.2,561.9-620.5H0.5z"/>
-        </svg>
-      </figure>
-      <!-- End SVG Background Left Top Shape -->
+<body>
 
-      <!-- SVG Background -->
-      <figure class="position-absolute-bottom-0">
-        <svg preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-            width="100%" height="140px" viewBox="20 -20 300 100" style="margin-bottom: -8px;" xml:space="preserve">
-          <path class="u-fill-primary" opacity=".075" d="M30.913,43.944c0,0,42.911-34.464,87.51-14.191c77.31,35.14,113.304-1.952,146.638-4.729
-      c48.654-4.056,69.94,16.218,69.94,16.218v54.396H30.913V43.944z" />
-          <path class="u-fill-primary" opacity=".075" d="M-35.667,44.628c0,0,42.91-34.463,87.51-14.191c77.31,35.141,113.304-1.952,146.639-4.729
-      c48.653-4.055,69.939,16.218,69.939,16.218v54.396H-35.667V44.628z" />
-          <path class="u-fill-primary" opacity="0" d="M43.415,98.342c0,0,48.283-68.927,109.133-68.927c65.886,0,97.983,67.914,97.983,67.914v3.716
-      H42.401L43.415,98.342z" />
-          <path class="u-fill-white" d="M-34.667,62.998c0,0,56-45.667,120.316-27.839C167.484,57.842,197,41.332,232.286,30.428
-      c53.07-16.399,104.047,36.903,104.047,36.903l1.333,36.667l-372-2.954L-34.667,62.998z" />
-        </svg>
-      </figure>
-      <!-- End SVG Background Section -->
-    </div>
-    <!-- End Hero Section -->
+    <div class="container">
+		<div class="container">
 
-    <!-- Portfolio Section -->
-    <div class="container u-space-3">
-      <div class="u-cubeportfolio u-space-2-bottom">
-        <!-- Filter -->
-        <ul id="filterControls" class="list-inline cbp-l-filters-alignRight text-center">
-          <li class="list-inline-item cbp-filter-item cbp-filter-item-active u-cubeportfolio__item" data-filter="*">All</li>
-          <li class="list-inline-item cbp-filter-item u-cubeportfolio__item" data-filter=".branding">Branding</li>
-          <li class="list-inline-item cbp-filter-item u-cubeportfolio__item" data-filter=".abstract">Abstract</li>
-          <li class="list-inline-item cbp-filter-item u-cubeportfolio__item" data-filter=".graphic">Graphic</li>
-          <li class="list-inline-item cbp-filter-item u-cubeportfolio__item" data-filter=".illustration">Illustration</li>
-        </ul>
-        <!-- End Filter -->
 
-        <!-- Content -->
-        <div class="cbp"
-             data-layout="grid"
-             data-controls="#filterControls"
-             data-animation="quicksand"
-             data-x-gap="32"
-             data-y-gap="32"
-             data-media-queries='[
-              {"width": 1500, "cols": 4},
-              {"width": 1100, "cols": 4},
-              {"width": 800, "cols": 3},
-              {"width": 480, "cols": 2},
-              {"width": 300, "cols": 1}
-            ]'>
-			{% load i18n cms_tags thumbnail %}
-          <!-- Item -->
-			{% for item in jobs %}
-          <div class="cbp-item rounded graphic">
-            <a class="cbp-caption" href="{% url 'job_with_pk' pk=item.pk  %}">
-              <div class="cbp-caption-defaultWrap">
-				  {% thumbnail item.images 380x360 crop as thumb %}
-                 <img class="img-fluid rounded" src="{{ thumb.url }} " width="{{ thumb.width }}" height="{{ thumb.height }}" alt="Image Description">
-              </div>
-              <div class="cbp-caption-activeWrap bg-primary">
-                <div class="cbp-l-caption-alignCenter">
-                  <div class="cbp-l-caption-body">
-                    <h4 class="h6 text-white mb-0">{{ item.type }}</h4>
-                    <p class="small u-text-light mb-0">
-                      ${{ item.price }}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
-			{% endfor %}
-          <!-- End Item -->
+<div id="collapseStripe" class="wrapper">
+  {% addtoblock "js" %}<script src="https://js.stripe.com/v3/"></script>{% endaddtoblock %}
 
-          <!-- Item -->
-			<!--
-          <div class="cbp-item rounded branding">
-            <a class="cbp-caption" href="../portfolio/single-page-simple.html">
-              <div class="cbp-caption-defaultWrap">
-                <img src="{% static 'assets/img/380x360/img2.jpg' %}" alt="Image Description">
-              </div>
-              <div class="cbp-caption-activeWrap bg-primary">
-                <div class="cbp-l-caption-alignCenter">
-                  <div class="cbp-l-caption-body">
-                    <h4 class="h6 text-white mb-0">Workout Buddy</h4>
-                    <p class="small u-text-light mb-0">
-                      by Tiberiu Neamu
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
-          <!-- End Item -->
+  <!-- can't do this -->
+  <!-- <script src="{% static 'js/stripeV3.js' %}"></script> -->
 
-          <!-- Item -->
-			<!--
-          <div class="cbp-item rounded abstract illustration">
-            <a class="cbp-caption" href="../portfolio/single-page-simple.html">
-              <div class="cbp-caption-defaultWrap">
-                <img src="{% static 'assets/img/380x360/img3.jpg' %}" alt="Image Description">
-              </div>
-              <div class="cbp-caption-activeWrap bg-primary">
-                <div class="cbp-l-caption-alignCenter">
-                  <div class="cbp-l-caption-body">
-                    <h4 class="h6 text-white mb-0">Tiger</h4>
-                    <p class="small u-text-light mb-0">
-                      by Cosmin Capitanu
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
-          <!-- End Item -->
+  <form action="." method="post" id="payment-form">
+    {% csrf_token %}
+    <div id="checkoutMethods">
+      <div style="margin: 10px;">
+        <h2>Cashout with Braintree</h2>
+		  <div id = "bt-dropin"></div>
+        <div class="form-row">
+          <label for="card-element">
+            Credit or debit card
+          </label>
+          <div id="card-element" class="StripeElement StripeElement--empty"><div class="__PrivateStripeElement" style="margin: 0px !important; padding: 0px !important; border: none !important; display: block !important; background: transparent !important; position: relative !important; opacity: 1 !important;"><iframe frameborder="0" allowtransparency="true" scrolling="no" name="__privateStripeFrame3" allowpaymentrequest="true" src="https://js.stripe.com/v3/elements-inner-card-8a434729e4eb82355db4882974049278.html#style[base][color]=%2332325d&amp;style[base][lineHeight]=18px&amp;style[base][fontFamily]=%22Helvetica+Neue%22%2C+Helvetica%2C+sans-serif&amp;style[base][fontSmoothing]=antialiased&amp;style[base][fontSize]=16px&amp;style[base][::placeholder][color]=%23aab7c4&amp;style[invalid][color]=%23fa755a&amp;style[invalid][iconColor]=%23fa755a&amp;componentName=card&amp;wait=false&amp;rtl=false&amp;features[noop]=false&amp;origin=https%3A%2F%2Fstripe.com&amp;referrer=https%3A%2F%2Fstripe.com%2Fdocs%2Fstripe-js%2Felements%2Fquickstart&amp;controllerId=__privateStripeController0" title="Secure payment input frame" style="border: none !important; margin: 0px !important; padding: 0px !important; width: 1px !important; min-width: 100% !important; overflow: hidden !important; display: block !important; height: 18px;"></iframe><input class="__PrivateStripeElement-input" aria-hidden="true" style="border: none !important; display: block !important; position: absolute !important; height: 1px !important; top: 0px !important; left: 0px !important; padding: 0px !important; margin: 0px !important; width: 100% !important; opacity: 0 !important; background: transparent !important; pointer-events: none !important; font-size: 16px !important;"><input class="__PrivateStripeElement-safariInput" aria-hidden="true" tabindex="-1" style="border: none !important; display: block !important; position: absolute !important; height: 1px !important; top: 0px !important; left: 0px !important; padding: 0px !important; margin: 0px !important; width: 100% !important; opacity: 0 !important; background: transparent !important; pointer-events: none !important; font-size: 16px !important;"></div></div>
 
-          <!-- Item -->
-			<!--
-          <div class="cbp-item rounded abstract illustration">
-            <a class="cbp-caption" href="../portfolio/single-page-simple.html">
-              <div class="cbp-caption-defaultWrap">
-                <img src="{% static 'assets/img/380x360/img5.jpg' %}" alt="Image Description">
-              </div>
-              <div class="cbp-caption-activeWrap bg-primary">
-                <div class="cbp-l-caption-alignCenter">
-                  <div class="cbp-l-caption-body">
-                    <h4 class="h6 text-white mb-0">Tiger</h4>
-                    <p class="small u-text-light mb-0">
-                      by Cosmin Capitanu
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
-          <!-- End Item -->
-
-          <!-- Item -->
-			<!--
-          <div class="cbp-item rounded graphic illustration">
-            <a class="cbp-caption" href="../portfolio/single-page-simple.html">
-              <div class="cbp-caption-defaultWrap">
-                <img src="{% static 'assets/img/380x360/img4.jpg' %}" alt="Image Description">
-              </div>
-              <div class="cbp-caption-activeWrap bg-primary">
-                <div class="cbp-l-caption-alignCenter">
-                  <div class="cbp-l-caption-body">
-                    <h4 class="h6 text-white mb-0">Tiger</h4>
-                    <p class="small u-text-light mb-0">
-                      by Cosmin Capitanu
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
-          <!-- End Item -->
-
-          <!-- Item -->
-			<!--
-          <div class="cbp-item rounded graphic illustration">
-            <a class="cbp-caption" href="../portfolio/single-page-simple.html">
-              <div class="cbp-caption-defaultWrap">
-                <img src="{% static 'assets/img/380x360/img6.jpg' %}" alt="Image Description">
-              </div>
-              <div class="cbp-caption-activeWrap bg-primary">
-                <div class="cbp-l-caption-alignCenter">
-                  <div class="cbp-l-caption-body">
-                    <h4 class="h6 text-white mb-0">Tiger</h4>
-                    <p class="small u-text-light mb-0">
-                      by Cosmin Capitanu
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
-          <!-- End Item -->
-
-          <!-- Item -->
-			<!--
-          <div class="cbp-item rounded branding">
-            <a class="cbp-caption" href="../portfolio/single-page-simple.html">
-              <div class="cbp-caption-defaultWrap">
-                <img src="{% static 'assets/img/380x360/img18.jpg' %}" alt="Image Description">
-              </div>
-              <div class="cbp-caption-activeWrap bg-primary">
-                <div class="cbp-l-caption-alignCenter">
-                  <div class="cbp-l-caption-body">
-                    <h4 class="h6 text-white mb-0">Workout Buddy</h4>
-                    <p class="small u-text-light mb-0">
-                      by Tiberiu Neamu
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
-          <!-- End Item -->
-
-          <!-- Item -->
-			<!--
-          <div class="cbp-item rounded abstract illustration">
-            <a class="cbp-caption" href="../portfolio/single-page-simple.html">
-              <div class="cbp-caption-defaultWrap">
-                <img src="{% static 'assets/img/380x360/img12.jpg' %}" alt="Image Description">
-              </div>
-              <div class="cbp-caption-activeWrap bg-primary">
-                <div class="cbp-l-caption-alignCenter">
-                  <div class="cbp-l-caption-body">
-                    <h4 class="h6 text-white mb-0">Tiger</h4>
-                    <p class="small u-text-light mb-0">
-                      by Cosmin Capitanu
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
-          <!-- End Item -->
-
-          <!-- Item -->
-			<!--
-          <div class="cbp-item rounded graphic">
-            <a class="cbp-caption" href="../portfolio/single-page-simple.html">
-              <div class="cbp-caption-defaultWrap">
-                <img src="{% static 'assets/img/380x360/img15.jpg' %}" alt="Image Description">
-              </div>
-              <div class="cbp-caption-activeWrap bg-primary">
-                <div class="cbp-l-caption-alignCenter">
-                  <div class="cbp-l-caption-body">
-                    <h4 class="h6 text-white mb-0">Remind Me More</h4>
-                    <p class="small u-text-light mb-0">
-                      by Tiberiu Neamu
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
-          <!-- End Item -->
-
-          <!-- Item -->
-			<!--
-          <div class="cbp-item rounded branding">
-            <a class="cbp-caption" href="../portfolio/single-page-simple.html">
-              <div class="cbp-caption-defaultWrap">
-                <img src="{% static 'assets/img/380x360/img17.jpg' %}" alt="Image Description">
-              </div>
-              <div class="cbp-caption-activeWrap bg-primary">
-                <div class="cbp-l-caption-alignCenter">
-                  <div class="cbp-l-caption-body">
-                    <h4 class="h6 text-white mb-0">Workout Buddy</h4>
-                    <p class="small u-text-light mb-0">
-                      by Tiberiu Neamu
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
-          <!-- End Item -->
-
-          <!-- Item -->
-			<!--
-          <div class="cbp-item rounded branding">
-            <a class="cbp-caption" href="../portfolio/single-page-simple.html">
-              <div class="cbp-caption-defaultWrap">
-                <img src="{% static 'assets/img/380x360/img16.jpg' %}" alt="Image Description">
-              </div>
-              <div class="cbp-caption-activeWrap bg-primary">
-                <div class="cbp-l-caption-alignCenter">
-                  <div class="cbp-l-caption-body">
-                    <h4 class="h6 text-white mb-0">Workout Buddy</h4>
-                    <p class="small u-text-light mb-0">
-                      by Tiberiu Neamu
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
-          <!-- End Item -->
-
-          <!-- Item -->
-			<!--
-          <div class="cbp-item rounded graphic">
-            <a class="cbp-caption" href="../portfolio/single-page-simple.html">
-              <div class="cbp-caption-defaultWrap">
-                <img src="{% static 'assets/img/380x360/img26.jpg' %}" alt="Image Description">
-              </div>
-              <div class="cbp-caption-activeWrap bg-primary">
-                <div class="cbp-l-caption-alignCenter">
-                  <div class="cbp-l-caption-body">
-                    <h4 class="h6 text-white mb-0">Remind Me More</h4>
-                    <p class="small u-text-light mb-0">
-                      by Tiberiu Neamu
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
-          <!-- End Item -->
-
-          <!-- Item -->
-			<!--
-          <div class="cbp-item rounded abstract">
-            <a class="cbp-caption" href="../portfolio/single-page-simple.html">
-              <div class="cbp-caption-defaultWrap">
-                <img src="{% static 'assets/img/380x360/img28.jpg' %}" alt="Image Description">
-              </div>
-              <div class="cbp-caption-activeWrap bg-primary">
-                <div class="cbp-l-caption-alignCenter">
-                  <div class="cbp-l-caption-body">
-                    <h4 class="h6 text-white mb-0">Remind Me More</h4>
-                    <p class="small u-text-light mb-0">
-                      by Tiberiu Neamu
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
-          <!-- End Item -->
-
-          <!-- Item -->
-			<!--
-          <div class="cbp-item rounded branding">
-            <a class="cbp-caption" href="../portfolio/single-page-simple.html">
-              <div class="cbp-caption-defaultWrap">
-                <img src="{% static 'assets/img/380x360/img27.jpg' %}" alt="Image Description">
-              </div>
-              <div class="cbp-caption-activeWrap bg-primary">
-                <div class="cbp-l-caption-alignCenter">
-                  <div class="cbp-l-caption-body">
-                    <h4 class="h6 text-white mb-0">Workout Buddy</h4>
-                    <p class="small u-text-light mb-0">
-                      by Tiberiu Neamu
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
-          <!-- End Item -->
-
-          <!-- Item -->
-			<!--
-          <div class="cbp-item rounded branding">
-            <a class="cbp-caption" href="../portfolio/single-page-simple.html">
-              <div class="cbp-caption-defaultWrap">
-                <img src="{% static 'assets/img/380x360/img30.jpg' %}" alt="Image Description">
-              </div>
-              <div class="cbp-caption-activeWrap bg-primary">
-                <div class="cbp-l-caption-alignCenter">
-                  <div class="cbp-l-caption-body">
-                    <h4 class="h6 text-white mb-0">Workout Buddy</h4>
-                    <p class="small u-text-light mb-0">
-                      by Tiberiu Neamu
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
-          <!-- End Item -->
-
-          <!-- Item -->
-			<!--
-          <div class="cbp-item rounded graphic">
-            <a class="cbp-caption" href="../portfolio/single-page-simple.html">
-              <div class="cbp-caption-defaultWrap">
-                <img src="{% static 'assets/img/380x360/img29.jpg' %}" alt="Image Description">
-              </div>
-              <div class="cbp-caption-activeWrap bg-primary">
-                <div class="cbp-l-caption-alignCenter">
-                  <div class="cbp-l-caption-body">
-                    <h4 class="h6 text-white mb-0">Remind Me More</h4>
-                    <p class="small u-text-light mb-0">
-                      by Tiberiu Neamu
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
-          <!-- End Item -->
+          <!-- Used to display form errors. -->
+          <div id="card-errors" role="alert"></div>
         </div>
-        <!-- End Content -->
-      </div>
-
-      <!-- Pagination -->
-      <nav aria-label="Page navigation">
-        <ul class="pagination justify-content-center">
-          <li class="page-item">
-            <a class="page-link" href="#" aria-label="Previous">
-              <span aria-hidden="true">&laquo;</span>
-              <span class="sr-only">Previous</span>
-            </a>
-          </li>
-          <li class="page-item active"><a class="page-link" href="#">1</a></li>
-          <li class="page-item"><a class="page-link" href="#">2</a></li>
-          <li class="page-item disabled"><a class="page-link" href="#">...</a></li>
-          <li class="page-item"><a class="page-link" href="#">12</a></li>
-          <li class="page-item">
-            <a class="page-link" href="#" aria-label="Next">
-              <span aria-hidden="true">&raquo;</span>
-              <span class="sr-only">Next</span>
-            </a>
-          </li>
-        </ul>
-      </nav>
-      <!-- End Pagination -->
-    </div>
-    <!-- End Portfolio Section -->
-
-    <!-- Contact Us Section -->
-    <div class="u-gradient-half-primary-v1">
-      <div class="container u-space-3-top u-space-4-bottom">
-        <div class="row justify-content-md-between align-items-md-start">
-          <div class="col-md-6 mb-7 mb-md-0">
-            <h2 class="text-white mb-5">You wish us<br>to talk about <span class="font-weight-bold">your project</span>?</h2>
-            <a class="h4 u-link-light" href="mailto:support@htmlstream.com">support@htmlstream.com</a>
-          </div>
-
-          <div class="col-md-6 mt-md-auto text-md-right">
-            <!-- Social Networks -->
-            <ul class="list-inline">
-              <li class="list-inline-item">
-                <a class="u-bg-transparent u-icon u-icon-light--air" href="#">
-                  <span class="fab fa-facebook-f u-icon__inner"></span>
-                </a>
-              </li>
-              <li class="list-inline-item">
-                <a class="u-bg-transparent u-icon u-icon-light--air" href="#">
-                  <span class="fab fa-google u-icon__inner"></span>
-                </a>
-              </li>
-              <li class="list-inline-item">
-                <a class="u-bg-transparent u-icon u-icon-light--air" href="#">
-                  <span class="fab fa-twitter u-icon__inner"></span>
-                </a>
-              </li>
-              <li class="list-inline-item">
-                <a class="u-bg-transparent u-icon u-icon-light--air" href="#">
-                  <span class="fab fa-github u-icon__inner"></span>
-                </a>
-              </li>
-            </ul>
-            <!-- End Social Networks -->
-
-            <span class="h4 u-text-light">+1 (062) 109-9222</span>
-          </div>
-        </div>
+        <input type="hidden" id="nonce" name="payment_method_nonce" />
       </div>
     </div>
-    <!-- End Contact Us Section -->
+    <button onclick = "window.location.href='{% url 'sucess' %}'">Transfer</button>
+  </form>
 
-    <!-- SVG Background -->
-    <figure class="position-absolute-bottom-0 z-index-2">
-      <svg preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-           width="100%" height="140px" viewBox="20 -20 300 100" style="margin-bottom: -8px;" xml:space="preserve">
-        <path class="u-fill-white" opacity="0.4" d="M30.913,43.944c0,0,42.911-34.464,87.51-14.191c77.31,35.14,113.304-1.952,146.638-4.729
-    c48.654-4.056,69.94,16.218,69.94,16.218v54.396H30.913V43.944z" />
-        <path class="u-fill-white" opacity="0.4" d="M-35.667,44.628c0,0,42.91-34.463,87.51-14.191c77.31,35.141,113.304-1.952,146.639-4.729
-    c48.653-4.055,69.939,16.218,69.939,16.218v54.396H-35.667V44.628z" />
-        <path class="u-fill-white" opacity="0" d="M43.415,98.342c0,0,48.283-68.927,109.133-68.927c65.886,0,97.983,67.914,97.983,67.914v3.716
-    H42.401L43.415,98.342z" />
-        <path class="u-fill-white" d="M-34.667,62.998c0,0,56-45.667,120.316-27.839C167.484,57.842,197,41.332,232.286,30.428
-    c53.07-16.399,104.047,36.903,104.047,36.903l1.333,36.667l-372-2.954L-34.667,62.998z" />
-      </svg>
-    </figure>
-    <!-- End SVG Background Section -->
-  </main>
-  <!-- ========== END MAIN ========== -->
+  </div>
 
-  <!-- ========== FOOTER ========== -->
-  <footer>
-    <!-- Lists -->
-    <div class="container u-space-2">
-      <div class="row justify-content-md-between">
-        <div class="col-sm-4 col-lg-2 mb-4 mb-lg-0">
-          <h3 class="h6">
-            <strong>About</strong>
-          </h3>
+  <div id="stripe-token-handler" class="is-hidden">Success! Got token: <span class="token"></span></div>
 
-          <!-- List -->
-          <ul class="list-unstyled mb-0">
-            <li><a class="u-list__link" href="../pages/about-agency.html">Agency</a></li>
-            <li><a class="u-list__link" href="../pages/about-start-up.html">Start-Up</a></li>
-            <li><a class="u-list__link" href="#">Business</a></li>
-          </ul>
-          <!-- End List -->
-        </div>
+</div>
+	</div>
 
-        <div class="col-sm-4 col-lg-2 mb-4 mb-lg-0">
-          <h3 class="h6">
-            <strong>Services</strong>
-          </h3>
-
-          <!-- List -->
-          <ul class="list-unstyled mb-0">
-            <li><a class="u-list__link" href="../pages/services-agency.html">Agency</a></li>
-            <li><a class="u-list__link" href="../pages/services-start-up.html">Start-Up</a></li>
-            <li><a class="u-list__link" href="#">Business</a></li>
-          </ul>
-          <!-- End List -->
-        </div>
-
-        <div class="col-sm-4 col-lg-2 mb-4 mb-lg-0">
-          <h3 class="h6">
-            <strong>Account</strong>
-          </h3>
-
-          <!-- List -->
-          <ul class="list-unstyled mb-0">
-            <li><a class="u-list__link" href="#">Profile</a></li>
-            <li><a class="u-list__link" href="#">User Contacts</a></li>
-            <li><a class="u-list__link" href="#">Projects</a></li>
-          </ul>
-          <!-- End List -->
-        </div>
-
-        <div class="col-md-6 col-lg-4">
-          <h3 class="h6 mb-4">
-            <strong>We are driven to deliver results for all your businesses.</strong>
-          </h3>
-
-          <!-- Button -->
-          <button type="button" class="btn btn-xs btn-dark u-btn-dark u-btn-wide transition-3d-hover text-left mb-2">
-            <span class="media align-items-center">
-              <span class="d-flex mr-3">
-                <span class="fab fa-apple font-size-26"></span>
-              </span>
-              <span class="media-body">
-                <span class="d-block">Download on the</span>
-                <strong class="font-size-14">App Store</strong>
-              </span>
-            </span>
-          </button>
-          <!-- End Button -->
-
-          <!-- Button -->
-          <button type="button" class="btn btn-xs btn-dark u-btn-dark u-btn-wide transition-3d-hover text-left mb-2">
-            <span class="media align-items-center">
-              <span class="d-flex mr-3">
-                <span class="fab fa-google-play font-size-26"></span>
-              </span>
-              <span class="media-body">
-                <span class="d-block">Get it on</span>
-                <strong class="font-size-14">Google Play</strong>
-              </span>
-            </span>
-          </button>
-          <!-- End Button -->
-        </div>
-      </div>
-    </div>
-    <!-- End Lists -->
-
-    <hr>
-
-    <!-- Copyright -->
-    <div class="container text-center u-space-1">
-      <!-- Logo -->
-      <a class="d-inline-block mb-2" href="../home/index.html" aria-label="Front">
-        <img src="{% static 'assets/svg/logos/logo.svg' %}" alt="Logo" style="width: 120px;">
-      </a>
-      <!-- End Logo -->
-
-      <p class="small text-muted">&copy; Front. 2018 Htmlstream. All rights reserved.</p>
-    </div>
-    <!-- End Copyright -->
-  </footer>
-  <!-- ========== END FOOTER ========== -->
-
-  <!-- ========== SECONDARY CONTENTS ========== -->
-  <!-- Account Sidebar Navigation -->
-  {% addtoblock "js" %}<script src="{% static 'djng/js/django-angular.min.js' %}" type="text/javascript"></script>{% endaddtoblock %}
-  <aside id="sidebarContent" class="u-sidebar u-unfold--css-animation u-unfold--hidden" aria-labelledby="sidebarNavToggler">
-    <div class="u-sidebar__scroller">
-      <div class="u-sidebar__container">
-        <div class="u-header-sidebar__footer-offset">
-          <!-- Toggle Button -->
-          <div class="d-flex align-items-center pt-4 px-7">
-            <button type="button" class="close ml-auto"
-                    aria-controls="sidebarContent"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                    data-unfold-event="click"
-                    data-unfold-hide-on-scroll="false"
-                    data-unfold-target="#sidebarContent"
-                    data-unfold-type="css-animation"
-                    data-unfold-animation-in="fadeInRight"
-                    data-unfold-animation-out="fadeOutRight"
-                    data-unfold-duration="500">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <!-- End Toggle Button -->
-{% load socialaccount %}
-    {% providers_media_js %}
-
-          <!-- Content -->
-          <div class="js-scrollbar u-sidebar__body">
-            <div class="u-sidebar__content u-header-sidebar__content">
-
-
-            {% if user.is_authenticated %}
-				<a class="btn btn-primary btn-block"  href="/logout/" >
-				logout
-			    </a>
-
-
-              <div class="ml-3">
-                <strong>{{ user.username }} <span class="badge u-badge-success ml-1">Pro</span></strong>
-                <span class="u-sidebar--account__holder-text"></span>
-              </div>
-				{% else %}
-				<a class="btn btn-primary btn-block"  href="/login/" >
-				login
-			    </a>
-		     <a href="{% provider_login_url  "facebook" method="js_sdk" %}" class="btn btn-primary btn-block btn-social btn-facebook" style="text-align:center">
-             <span class="fa fa-facebook"></span>
-              Login with Facebook
-              </a>
-				<a class="btn btn-primary btn-block"  href="/register/" >
-				Signup
-			</a>
-				{% endif %}
-
-
-
-
-		</li>
-		{% if password_reset_url or register_customer_url %}
-		<li role="separator" class="divider"></li>
-			{% if password_reset_url %}
-		<li><a href="{{ password_reset_url }}">{% trans "Password Forgotten?" %}</a></li>
-			{% endif %}
-			{% if register_customer_url %}
-		<li><a href="{{ register_customer_url }}">{% trans "Register Yourself" %}</a></li>
-			{% endif %}
-		{% endif %}
-	    </ul>
-
-
-           <!-- <form class="js-validate" name="{{ form_name }}" djng-endpoint="{% url 'shop:login' %}" role="form" novalidate>
-
-                <!-- Login -->
-                <!--<div id="login" data-target-group="idForm">
-                  <!-- Title -->
-                 <!-- <header class="text-center mb-7">
-                    <h2 class="h4 mb-0">Welcome Back!</h2>
-                    <p>Login to manage your account.</p>
-                  </header>
-                  <!-- End Title -->
-
-                  <!-- Input -->
-                  <!--<div class="js-form-message mb-4">
-                    <div class="js-focus-state input-group u-form">
-                      <div class="input-group-prepend u-form__prepend">
-                        <span class="input-group-text u-form__text">
-                          <span class="fa fa-user u-form__text-inner"></span>
-                        </span>
-                      </div>
-                      <input type="email" class="form-control u-form__input" name="email" required
-                             placeholder="Email"
-                             aria-label="Email"
-                             data-msg="Please enter a valid email address."
-                             data-error-class="u-has-error"
-							 data-success-class="u-has-success">
-                    </div>
-                  </div>
-                  <!-- End Input -->
-
-                  <!-- Input -->
-                 <!-- <div class="js-form-message mb-2">
-                    <div class="js-focus-state input-group u-form">
-                      <div class="input-group-prepend u-form__prepend">
-                        <span class="input-group-text u-form__text">
-                          <span class="fa fa-lock u-form__text-inner"></span>
-                        </span>
-                      </div>
-                      <input type="password" class="form-control u-form__input" name="password" required
-                             placeholder="Password"
-                             aria-label="Password"
-                             data-msg="Your password is invalid. Please try again."
-                             data-error-class="u-has-error"
-                             data-success-class="u-has-success">
-                    </div>
-                  </div>
-                  <!-- End Input -->
-
-                 <!-- <div class="clearfix mb-4">
-                    <a class="js-animation-link float-right small u-link-muted" href="javascript:;"
-                       data-target="#forgotPassword"
-                       data-link-group="idForm"
-                       data-animation-in="slideInUp">Forgot Password?</a>
-                  </div>
-
-                  <div class="mb-2">
-                    <button type="submit" class="btn btn-block btn-primary u-btn-primary transition-3d-hover">Login</button>
-                  </div>
-
-                  <div class="text-center mb-4">
-                    <span class="small text-muted">Do not have an account?</span>
-                    <a class="js-animation-link small" href="javascript:;"
-                       data-target="#signup"
-                       data-link-group="idForm"
-                       data-animation-in="slideInUp">Signup
-                    </a>
-                  </div>
-
-                  <div class="text-center">
-                    <span class="u-divider u-divider--xs u-divider--text mb-4">OR</span>
-                  </div>
-
-                  <!-- Login Buttons -->
-                 <!-- <div class="d-flex">
-                    <a class="btn btn-block btn-sm u-btn-facebook--air transition-3d-hover mr-1" href="#">
-                      <span class="fab fa-facebook-square mr-1"></span>
-                      Facebook
-                    </a>
-                    <a class="btn btn-block btn-sm u-btn-google--air transition-3d-hover ml-1 mt-0" href="#">
-                      <span class="fab fa-google mr-1"></span>
-                      Google
-                    </a>
-                  </div>
-                  <!-- End Login Buttons -->
-                </div>
-
-                <!-- Signup -->
-                <div id="signup" style="display: none; opacity: 0;" data-target-group="idForm">
-                  <!-- Title -->
-                  <header class="text-center mb-7">
-                    <h2 class="h4 mb-0">Welcome to Front.</h2>
-                    <p>Fill out the form to get started.</p>
-                  </header>
-                  <!-- End Title -->
-
-                  <!-- Input -->
-                  <div class="js-form-message mb-4">
-                    <div class="js-focus-state input-group u-form">
-                      <div class="input-group-prepend u-form__prepend">
-                        <span class="input-group-text u-form__text">
-                          <span class="fa fa-user u-form__text-inner"></span>
-                        </span>
-                      </div>
-                      <input type="email" class="form-control u-form__input" name="email" required
-                             placeholder="Email"
-                             aria-label="Email"
-                             data-msg="Please enter a valid email address."
-                             data-error-class="u-has-error"
-                             data-success-class="u-has-success">
-                    </div>
-                  </div>
-                  <!-- End Input -->
-
-                  <!-- Input -->
-                  <div class="js-form-message mb-4">
-                    <div class="js-focus-state input-group u-form">
-                      <div class="input-group-prepend u-form__prepend">
-                        <span class="input-group-text u-form__text">
-                          <span class="fa fa-lock u-form__text-inner"></span>
-                        </span>
-                      </div>
-                      <input type="password" class="form-control u-form__input" name="password" required
-                             placeholder="Password"
-                             aria-label="Password"
-                             data-msg="Your password is invalid. Please try again."
-                             data-error-class="u-has-error"
-                             data-success-class="u-has-success">
-                    </div>
-                  </div>
-                  <!-- End Input -->
-
-                  <!-- Input -->
-                  <div class="js-form-message mb-4">
-                    <div class="js-focus-state input-group u-form">
-                      <div class="input-group-prepend u-form__prepend">
-                        <span class="input-group-text u-form__text">
-                          <span class="fa fa-key u-form__text-inner"></span>
-                        </span>
-                      </div>
-                      <input type="password" class="form-control u-form__input" name="confirmPassword" required
-                             placeholder="Confirm Password"
-                             aria-label="Confirm Password"
-                             data-msg="Password does not match the confirm password."
-                             data-error-class="u-has-error"
-                             data-success-class="u-has-success">
-                    </div>
-                  </div>
-                  <!-- End Input -->
-
-                  <div class="mb-2">
-                    <button type="submit" class="btn btn-block btn-primary u-btn-primary transition-3d-hover">Get Started</button>
-                  </div>
-
-                  <div class="text-center mb-4">
-                    <span class="small text-muted">Already have an account?</span>
-                    <a class="js-animation-link small" href="javascript:;"
-                       data-target="#login"
-                       data-link-group="idForm"
-                       data-animation-in="slideInUp">Login
-                    </a>
-                  </div>
-
-                  <div class="text-center">
-                    <span class="u-divider u-divider--xs u-divider--text mb-4">OR</span>
-                  </div>
-
-                  <!-- Login Buttons -->
-                  <div class="d-flex">
-                    <a class="btn btn-block btn-sm u-btn-facebook--air transition-3d-hover mr-1" href="#">
-                      <span class="fab fa-facebook-square mr-1"></span>
-                      Facebook
-                    </a>
-                    <a class="btn btn-block btn-sm u-btn-google--air transition-3d-hover ml-1 mt-0" href="#">
-                      <span class="fab fa-google mr-1"></span>
-                      Google
-                    </a>
-                  </div>
-                  <!-- End Login Buttons -->
-                </div>
-                <!-- End Signup -->
-
-                <!-- Forgot Password -->
-                <div id="forgotPassword" style="display: none; opacity: 0;" data-target-group="idForm">
-                  <!-- Title -->
-                  <header class="text-center mb-7">
-                    <h2 class="h4 mb-0">Recover Password.</h2>
-                    <p>Enter your email address and an email with instructions will be sent to you.</p>
-                  </header>
-                  <!-- End Title -->
-
-                  <!-- Input -->
-                  <div class="js-form-message mb-4">
-                    <div class="js-focus-state input-group u-form">
-                      <div class="input-group-prepend u-form__prepend">
-                        <span class="input-group-text u-form__text">
-                          <span class="fas fa-envelope u-inner-form__text"></span>
-                        </span>
-                      </div>
-                      <input type="email" class="form-control u-form__input" name="email" required
-                             placeholder="Your email"
-                             aria-label="Your email"
-                             data-msg="Please enter a valid email address."
-                             data-error-class="u-has-error"
-                             data-success-class="u-has-success">
-                    </div>
-                  </div>
-                  <!-- End Input -->
-
-                  <div class="mb-2">
-                    <button type="submit" class="btn btn-block btn-primary u-btn-primary transition-3d-hover">Recover Password</button>
-                  </div>
-
-                  <div class="text-center mb-4">
-                    <span class="small text-muted">Remember your password?</span>
-                    <a class="js-animation-link small" href="javascript:;"
-                       data-target="#login"
-                       data-link-group="idForm"
-                       data-animation-in="slideInUp">Login
-                    </a>
-                  </div>
-                </div>
-                <!-- End Forgot Password -->
-              </form>
-
-
-
-
-
-
-            </div>
-          </div>
-          <!-- End Content -->
-        </div>
-
-        <!-- Footer -->
-        <footer class="u-sidebar__footer u-sidebar__footer--account">
-          <ul class="list-inline mb-0">
-            <li class="list-inline-item pr-3">
-              <a class="u-sidebar__footer--account__text" href="../pages/privacy.html">Privacy</a>
-            </li>
-            <li class="list-inline-item pr-3">
-              <a class="u-sidebar__footer--account__text" href="../pages/terms.html">Terms</a>
-            </li>
-            <li class="list-inline-item">
-              <a class="u-sidebar__footer--account__text" href="../pages/help.html">
-                <i class="fa fa-info-circle"></i>
-              </a>
-            </li>
-          </ul>
-
-          <!-- SVG Background Shape -->
-          <div class="position-absolute-bottom-0">
-            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-               viewBox="0 0 300 126.5" style="margin-bottom: -5px; enable-background:new 0 0 300 126.5;" xml:space="preserve">
-              <path class="u-fill-primary" opacity=".6" d="M0,58.9c0-0.9,5.1-2,5.8-2.2c6-0.8,11.8,2.2,17.2,4.6c4.5,2.1,8.6,5.3,13.3,7.1C48.2,73.3,61,73.8,73,69
-                c43-16.9,40-7.9,84-2.2c44,5.7,83-31.5,143-10.1v69.8H0C0,126.5,0,59,0,58.9z"/>
-              <path class="u-fill-primary" d="M300,68.5v58H0v-58c0,0,43-16.7,82,5.6c12.4,7.1,26.5,9.6,40.2,5.9c7.5-2.1,14.5-6.1,20.9-11
-                c6.2-4.7,12-10.4,18.8-13.8c7.3-3.8,15.6-5.2,23.6-5.2c16.1,0.1,30.7,8.2,45,16.1c13.4,7.4,28.1,12.2,43.3,11.2
-                C282.5,76.7,292.7,74.4,300,68.5z"/>
-              <circle class="u-fill-danger" cx="259.5" cy="17" r="13"/>
-              <circle class="u-fill-primary" cx="290" cy="35.5" r="8.5"/>
-              <circle class="u-fill-success" cx="288" cy="5.5" r="5.5"/>
-              <circle class="u-fill-warning" cx="232.5" cy="34" r="2"/>
-            </svg>
-          </div>
-          <!-- End SVG Background Shape -->
-        </footer>
-        <!-- End Footer -->
-      </div>
-    </div>
-  </aside>
-  <!-- End Account Sidebar Navigation -->
-  <!-- ========== END SECONDARY CONTENTS ========== -->
-
-  <!-- Go to Top -->
-  <a class="js-go-to u-go-to" href="#"
-    data-position='{"bottom": 15, "right": 15 }'
-    data-type="fixed"
-    data-offset-top="400"
-    data-compensation="#header"
-    data-show-effect="slideInUp"
-    data-hide-effect="slideOutDown">
-    <span class="fa fa-arrow-up u-go-to__inner"></span>
-  </a>
-  <!-- End Go to Top -->
 {% render_block "js"  %}
-  <!-- JS Global Compulsory -->
-  {% addtoblock "js" %}<script src="{% static 'assets/vendor/jquery/dist/jquery.min.js' %}"></script>{% endaddtoblock %}
-  {% addtoblock "js" %}<script src="{% static 'assets/vendor/jquery-migrate/dist/jquery-migrate.min.js' %}"></script>{% endaddtoblock %}
-  {% addtoblock "js" %}<script src="{% static 'assets/vendor/popper.js/dist/umd/popper.min.js' %}"></script>{% endaddtoblock %}
-  {% addtoblock "js" %}<script src="{% static 'assets/vendor/bootstrap/bootstrap.min.js' %}"></script>{% endaddtoblock %}
+<!-- script for the stripe form -->
+{% addtoblock "js" %}<script src="{% static 'shop/js/checkout.js' %}"></script>{% endaddtoblock %}
+
+{% addtoblock "js" %}<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>{% endaddtoblock %}
 
 
-  <!-- JS Implementing Plugins -->
-  {% addtoblock "js" %}<script src="{% static 'assets/vendor/hs-megamenu/src/hs.megamenu.js' %}"></script>{% endaddtoblock %}
-  {% addtoblock "js" %}<script src="{% static 'assets/vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js' %}"></script>{% endaddtoblock %}
-  {% addtoblock "js" %}<script src="{% static 'assets/vendor/jquery-validation/dist/jquery.validate.min.js' %}"></script>{% endaddtoblock %}
-  {% addtoblock "js" %}<script src="{% static 'assets/vendor/cubeportfolio/js/jquery.cubeportfolio.min.js' %}"></script>{% endaddtoblock %}
+{% addtoblock "js" %}<script src="https://js.braintreegateway.com/web/dropin/1.13.0/js/dropin.min.js"></script>{% endaddtoblock %}
+	{% block js %}
+<script>
+  var form = document.querySelector('#payment-form');
+  var client_token = '{{ client_token }}';
 
-  <!-- JS Front -->
-  {% addtoblock "js" %}<script src="{% static 'assets/js/hs.core.js' %}"></script>{% endaddtoblock %}
-  {% addtoblock "js" %}<script src="{% static 'assets/js/components/hs.header.js' %}"></script>{% endaddtoblock %}
-  {% addtoblock "js" %}<script src="{% static 'assets/js/components/hs.unfold.js' %}"></script>{% endaddtoblock %}
-  {% addtoblock "js" %}<script src="{% static 'assets/js/components/hs.malihu-scrollbar.js' %}"></script>{% endaddtoblock %}
-  {% addtoblock "js" %}<script src="{% static 'assets/js/components/hs.validation.js' %}"></script>{% endaddtoblock %}
-  {% addtoblock "js" %}<script src="{% static 'assets/js/helpers/hs.focus-state.js' %}"></script>{% endaddtoblock %}
-  {% addtoblock "js" %}<script src="{% static 'assets/js/components/hs.show-animation.js' %}"></script>{% endaddtoblock %}
-  {% addtoblock "js" %}<script src="{% static 'assets/js/components/hs.cubeportfolio.js' %}"></script>{% endaddtoblock %}
-  {% addtoblock "js" %}<script src="{% static 'assets/js/components/hs.go-to.js' %}"></script>{% endaddtoblock %}
-  {% addtoblock "js" %}<script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
-   integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
-   crossorigin=""></script>{% endaddtoblock %}
-  {% block js %}
-  <!-- JS Plugins Init. -->
-  <script>
-    $(window).on('load', function () {
-      // initialization of HSMegaMenu component
-      $('.js-mega-menu').HSMegaMenu({
-        event: 'hover',
-        pageContainer: $('.container'),
-        breakpoint: 767,
-        hideTimeOut: 0
+  braintree.dropin.create({
+    authorization: client_token,
+    container: '#bt-dropin',
+    paypal: {
+      flow: 'vault'
+    }
+  }, function (createErr, instance) {
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      instance.requestPaymentMethod(function (err, payload) {
+        if (err) {
+          console.log('Error', err);
+          return;
+        }
+
+        // Add the nonce to the form and submit
+        document.querySelector('#nonce').value = payload.nonce;
+        form.submit();
       });
     });
-
-    $(document).on('ready', function () {
-      // initialization of header
-      $.HSCore.components.HSHeader.init($('#header'));
-
-      // initialization of unfold component
-      $.HSCore.components.HSUnfold.init($('[data-unfold-target]'), {
-        afterOpen: function () {
-          $(this).find('input[type="search"]').focus();
-        }
-      });
-
-      // initialization of malihu scrollbar
-      $.HSCore.components.HSMalihuScrollBar.init($('.js-scrollbar'));
-
-      // initialization of show animations
-      $.HSCore.components.HSShowAnimation.init('.js-animation-link');
-
-      // initialization of form validation
-      $.HSCore.components.HSValidation.init('.js-validate', {
-        rules: {
-          confirmPassword: {
-            equalTo: '#password'
-          }
-        }
-      });
-
-      // initialization of forms
-      $.HSCore.helpers.HSFocusState.init();
-
-      // initialization of cubeportfolio
-      $.HSCore.components.HSCubeportfolio.init('.cbp');
-
-      // initialization of go to
-      $.HSCore.components.HSGoTo.init('.js-go-to');
-    });
-
-
-
-
-	var mymap = L.map('mapid').setView([38.908484, -77.035143], 13);
-
-	L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
-		maxZoom: 18,
-		attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
-			'<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-			'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-		id: 'mapbox.streets'
-	}).addTo(mymap);
-
-	L.marker([38.908484, -77.035143]).addTo(mymap)
-		.bindPopup("<b> USA !</b><br />Washington D.C., DC,.").openPopup();
-
-	L.circle([38.908484, -77.035143], 500, {
-		color: 'red',
-		fillColor: '#f03',
-		fillOpacity: 0.5
-	}).addTo(mymap).bindPopup("I am a circle.");
-
-	L.polygon([
-		[38.908484, -0.08],
-		[38.908484, -0.06],
-		[38.908484, -0.047]
-	]).addTo(mymap).bindPopup("I am a polygon.");
-
-
-	var popup = L.popup();
-
-
-  </script>
+  });
+</script>
+<!-- script for toggling display of the form -->
+<script type="text/javascript">
+    function toggleDisplay() {
+      var x = document.getElementById("collapseStripe");
+      if (x.style.display === "none") {
+          x.style.display = "block";
+      } else {
+          x.style.display = "none";
+      }
+    };
+</script>
 {% endblock js %}
+
 </body>
 </html>
