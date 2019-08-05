@@ -10,20 +10,57 @@
   <!-- Required Meta Tags Always Come First -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
   <!-- Favicon -->
   <link rel="shortcut icon" href="../../favicon.ico">
 
 {% block css %}
 
-     <style type="text/css">
-       #mapid { height: 580px; width: 1000px; align-center: True }
+     <style>
+          #map-example-container {height: 500px;}
+		 #input-styling-address input {
+  display: inline-block;
+  border: 1px solid #d9d9d9;
+  border-radius: 12px;
+  background: #ffffff;
+  padding: 1em 0 1em 45px;
+  width: 100%;
+}
+
+#input-styling-address input:focus, #input-styling-address input:active {
+  outline: 0;
+  border-color: #aaaaaa;
+  background: #ffffff;
+}
+
+#input-styling-address .ap-nostyle-dropdown-menu {
+  box-shadow: none;
+  border: 1px solid #dadada;
+  border-radius: 0;
+  background: #fff;
+  width: 100%;
+}
+
+#input-styling-address .ap-nostyle-input-icon {
+  display: block;
+  position: absolute;
+  background: none;
+  border: none;
+}
+
+#input-styling-address .algolia-places-nostyle { width: 50%; }
+#input-styling-address .ap-nostyle-icon-pin { left: 5px;top: 10px; }
+#input-styling-address .ap-nostyle-icon-clear { right: 5px;top: 15px }
+#input-styling-address input:hover { border-color: silver; }
+#input-styling-address input::placeholder { color: #aaaaaa; }
+#input-styling-address .ap-nostyle-suggestion { border-bottom: 1px solid #efefef; }
     </style>
 	<!--[if lt IE 9]><script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 	{% endblock css %}
  {% render_block "css"  %}
   <!-- Google Fonts -->
   <link href="//fonts.googleapis.com/css?family=Poppins:300,400,500,600" rel="stylesheet">
+
 
   <!-- CSS Global Compulsory -->
   {% addtoblock "css" %} <link rel="stylesheet" href="{% static 'assets/vendor/bootstrap/css/bootstrap.css' %}">{% endaddtoblock %}
@@ -34,11 +71,10 @@
   {% addtoblock "css" %}<link rel="stylesheet" href="{% static 'assets/vendor/hs-megamenu/src/hs.megamenu.css' %}">{% endaddtoblock %}
   {% addtoblock "css" %}<link rel="stylesheet" href="{% static 'assets/vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css' %}">{% endaddtoblock %}
   {% addtoblock "css" %}<link rel="stylesheet" href="{% static 'assets/vendor/cubeportfolio/css/cubeportfolio.min.css' %}">{% endaddtoblock %}
-  {% addtoblock "css" %}<link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
-                       integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
-                       crossorigin=""/>{% endaddtoblock %}
+	{% addtoblock "css" %}<link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet/1/leaflet.css" />{% endaddtoblock %}
   <!-- CSS Front Template -->
  {% addtoblock "css" %}<link rel="stylesheet" href="{% static 'assets/css/front.css' %}">{% endaddtoblock %}
+
 </head>
 
 <body>
@@ -163,7 +199,7 @@
                       <strong class="d-block mb-2">Featured Item</strong>
                       <p>Create astonishing web sites and pages.</p>
                     </div>
-                    <a class="btn btn-xs u-btn-success--air transition-3d-hover" href="index.html">Apply Now <span class="fa fa-angle-right ml-2"></span></a>
+                    <a class="btn btn-xs u-btn-success--air transition-3d-hover" href="#">Apply Now <span class="fa fa-angle-right ml-2"></span></a>
                   </div>
                 </div>
               </div>
@@ -210,7 +246,7 @@
 
           <div class="ml-auto">
             <!-- Jump To -->
-            <div class="d-inline-block d-sm-none position-relative mr-2">
+          <!--  <div class="d-inline-block d-sm-none position-relative mr-2">
               <a id="jumpToDropdownInvoker" class="d-flex align-items-center u-unfold-wrapper" href="javascript:;" role="button"
                  aria-controls="jumpToDropdown"
                  aria-haspopup="true"
@@ -235,7 +271,7 @@
             <!-- End Jump To -->
 
             <!-- Links -->
-            <div class="d-none d-sm-inline-block ml-sm-auto">
+           <!--- <div class="d-none d-sm-inline-block ml-sm-auto">
               <ul class="list-inline mb-0">
                 <li class="list-inline-item mr-0">
                   <a class="u-header__topbar-nav-link" href="../pages/help.html">Help</a>
@@ -257,7 +293,7 @@
                       aria-controls="searchPushTop"
                       data-unfold-type="jquery-slide"
                       data-unfold-target="#searchPushTop">
-                <span class="fa fa-search u-btn--icon__inner"></span>
+               <!-- <span class="fa fa-search u-btn--icon__inner"></span>-->
               </a>
             </li>
             <!-- End Search -->
@@ -290,7 +326,7 @@
         <!-- Nav -->
         <nav class="js-mega-menu navbar navbar-expand-md u-header__navbar">
           <!-- Logo -->
-          <a class="navbar-brand u-header__navbar-brand u-header__navbar-brand-top-space" href="index.html" aria-label="Front">
+          <a class="navbar-brand u-header__navbar-brand u-header__navbar-brand-top-space" href="#" aria-label="Front">
             <img src="{% static 'assets/svg/logos/logo.svg' %}" alt="Logo">
           </a>
           <!-- End Logo -->
@@ -406,79 +442,143 @@
               <!-- End Home -->
 
               <!-- Pages -->
-              <li class="nav-item hs-has-sub-menu u-header__nav-item"
+				<ul class="navbar-nav u-header__navbar-nav ml-lg-auto">
+              <!-- Home -->
+              <!--<li class="nav-item hs-has-mega-menu u-header__nav-item"
                   data-event="hover"
                   data-animation-in="slideInUp"
-                  data-animation-out="fadeOut">
-                <a id="pagesMegaMenu" class="nav-link u-header__nav-link" href="javascript:;"
-                   aria-haspopup="true"
-                   aria-expanded="false"
-                   aria-labelledby="pagesSubMenu">
-                  Account
-                  <span class="fa fa-angle-down u-header__nav-link-icon"></span>
-                </a>
-
-                <!-- Pages - Submenu -->
-               {% if user.is_authenticated %}
+                  data-animation-out="fadeOut"
+                  data-position="left">-->
+                 {% if user.is_authenticated %}
 						    {% if user.freelancer == True %}
-                <ul id="pagesSubMenu" class="list-inline hs-sub-menu u-header__sub-menu py-3 mb-0" style="min-width: 220px;"
-                    aria-labelledby="pagesMegaMenu">
+                 <a id="homeMegaMenu" class="nav-link u-header__nav-link pl-0" href="{% url 'profile_with_pk' pk=user.pk  %}"
+                   aria-haspopup="true"
+                   aria-expanded="false">
+                  Profile
+                 <!-- <span class="fa fa-angle-down u-header__nav-link-icon"></span>-->
+                </a>
                   <!-- Account -->
-                  <li class="dropdown-item px-0">
-                    <a id="navLinkPagesAccount" class="nav-link u-header__sub-menu-nav-link u-list__link py-2" href="{% url 'profile_with_pk' pk=user.pk  %}"
-                       >
-                      Profile
-                    </a>
-				  </li>
-				</ul>
 
 					  {% endif %}
 					  {% endif %}
 
 					  {% if user.is_authenticated %}
 						    {% if user.Jopublisher == True %}
-				<ul id="pagesSubMenu" class="list-inline hs-sub-menu u-header__sub-menu py-3 mb-0" style="min-width: 220px;"
-                    aria-labelledby="pagesMegaMenu">
-                  <li class="dropdown-item px-0">
-                    <a id="navLinkPagesAccount" class="nav-link u-header__sub-menu-nav-link u-list__link py-2" href="../userjoblist/"
-                       >
-                      Profile
-                    </a>
-				</li>
-				</ul>
+
+				 <a id="homeMegaMenu" class="nav-link u-header__nav-link pl-0" href="../userjoblist/"
+                   aria-haspopup="true"
+                   aria-expanded="false">
+                  Profile
+                 <!-- <span class="fa fa-angle-down u-header__nav-link-icon"></span>-->
+                </a>
+
+
 					  {% endif %}
 					  {% endif %}
 					{% if user.is_authenticated == False %}
-				<ul id="pagesSubMenu" class="list-inline hs-sub-menu u-header__sub-menu py-3 mb-0" style="min-width: 220px;"
-                    aria-labelledby="pagesMegaMenu">
-
-                  <li class="dropdown-item px-0">
-                    <a id="navLinkPagesAccount" class="nav-link u-header__sub-menu-nav-link u-list__link py-2" href="/login/"
-                       >
-                      Login First
-                    </a>
-				</li>
-				</ul>
+				  <a id="homeMegaMenu" class="nav-link u-header__nav-link pl-0" href="/login/"
+                   aria-haspopup="true"
+                   aria-expanded="false">
+                  Profile
+                 <!-- <span class="fa fa-angle-down u-header__nav-link-icon"></span>-->
+                </a>
 					  {% endif %}
+
+
+                <!-- Home - Mega Menu -->
+                <div class="hs-mega-menu u-header__sub-menu w-100 u-header__mega-menu-wrapper-v2" aria-labelledby="homeMegaMenu">
+                  <div class="row p-0 mr-0">
+                    <div class="col-lg-6 pr-0">
+                      <!-- Banner Image -->
+                      <div class="d-none d-lg-block u-header__banner-v1" data-bg-img-src="{% static 'assets/img/750x750/img1.jpg' %}">
+                        <div class="w-100 text-center u-header__banner-v1-content u-content-centered-y p-4">
+                          <div class="mb-4">
+                            <strong class="d-block u-header__banner-v1-title mb-2">Branding Works</strong>
+                            <span class="u-header__banner-v1-text">Experience a level of our quality in both design &amp; customization works.</span>
+                          </div>
+                          <a class="btn btn-primary u-btn-primary btn-sm transition-3d-hover" href="#">Learn More <span class="fa fa-angle-right ml-2"></span></a>
+                        </div>
+                      </div>
+                      <!-- End Banner Image -->
+                    </div>
+
+                    <div class="col-lg-6 u-header__mega-menu-wrapper-v3">
+                      <div class="row u-header__mega-menu-wrapper-v1">
+                        <div class="col-sm-6">
+                          <strong class="d-block mb-2">Classic</strong>
+
+                          <!-- Links -->
+                          <ul class="list-unstyled mb-4">
+                           <!-- <li><a class="nav-link u-list__link py-2 px-0" href="index.html">Classic Agency</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="classic-crypto.html">Classic Crypto</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="classic-business.html">Classic Business</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="classic-marketing.html">Classic Marketing</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="classic-consulting.html">Classic Consulting</a></li>-->
+                          </ul>
+                          <!-- End Links -->
+
+                          <strong class="d-block mb-2">Corporate</strong>
+
+                          <!-- Links -->
+                          <ul class="list-unstyled mb-4">
+                         <!--   <li><a class="nav-link u-list__link py-2 px-0" href="corporate-agency.html">Corporate Agency</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="corporate-start-up.html">Corporate Start-Up</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="corporate-business.html">Corporate Business <span class="badge badge-success ml-1">New</span></a></li>-->
+                          </ul>
+                          <!-- End Links -->
+                        </div>
+
+                        <div class="col-sm-6">
+                          <strong class="d-block mb-2">Landing</strong>
+
+                          <!-- Links -->
+                          <ul class="list-unstyled mb-4">
+                          <!--  <li><a class="nav-link u-list__link py-2 px-0" href="landing-house.html">Landing House <span class="badge badge-success ml-1">New</span></a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="landing-job.html">Landing Job <span class="badge badge-success ml-1">New</span></a></li>-->
+                          </ul>
+                          <!-- End Links -->
+
+                          <strong class="d-block mb-2">Blog</strong>
+
+                          <!-- Links -->
+                          <ul class="list-unstyled mb-4">
+                          <!--  <li><a class="nav-link u-list__link py-2 px-0" href="blog-agency.html">Blog Agency</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="blog-start-up.html">Blog Start-Up</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="blog-business.html">Blog Business</a></li>-->
+                          </ul>
+                          <!-- End Links -->
+
+                          <strong class="d-block mb-2">Portfolio</strong>
+
+                          <!-- Links -->
+
+                          <ul class="list-unstyled u-list">
+                            <li><a class="nav-link u-list__link py-2 px-0" href="portfolio-agency.html">Portfolio Agency</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="portfolio-profile.html">Portfolio Profile</a></li>
+                          </ul>
+                          <!-- End Links -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- End pages - Mega Menu -->
+              </li>
+
+
+
+
+
+
+
+
+
+
 
 
                     <!-- Submenu (level 2) -->
 
-                    <ul id="navSubmenuPagesAccount" class="hs-sub-menu list-unstyled u-header__sub-menu u-header__sub-menu-menu-gutter--y u-header__sub-menu-offset" style="min-width: 220px;"
-                        aria-labelledby="navLinkPagesAccount">
-                     <!-- <li class="dropdown-item px-0">
-                        <a class="nav-link u-list__link px-4" href="#">Dashboard</a>
-                      </li>-->
-                      <li class="dropdown-item px-0">
 
-
-						  {% if user.is_authenticated %}
-						   {% if user.jopublisher == True %}
-						  <a class="nav-link u-list__link px-4" href="../userjoblist/">Profile</a>
-						   {% endif %}
-						  {% endif %}
-
-                      </li>
                       <!--<li class="dropdown-item px-0">
                         <a class="nav-link u-list__link px-4" href="#">My tasks</a>
                       </li>-->
@@ -516,7 +616,6 @@
                     <!-- End Submenu (level 2) -->
 
                   <!-- End Account -->
-
 
                   <!-- About -->
                   <!--<li class="dropdown-item hs-has-sub-menu">
@@ -710,52 +809,208 @@
               <!-- End Pages -->
 
               <!-- Works -->
-              <li class="nav-item hs-has-mega-menu u-header__nav-item"
+			<ul class="navbar-nav u-header__navbar-nav ml-lg-auto">
+              <!-- Home -->
+              <!--<li class="nav-item hs-has-mega-menu u-header__nav-item"
                   data-event="hover"
                   data-animation-in="slideInUp"
                   data-animation-out="fadeOut"
-                  data-position="right">
-                <a id="worksMegaMenu" class="nav-link u-header__nav-link" href="javascript:;"
+                  data-position="left">-->
+
+                 <a id="homeMegaMenu" class="nav-link u-header__nav-link pl-0" href="../profilelist/"
                    aria-haspopup="true"
                    aria-expanded="false">
-                  Pages
-                  <span class="fa fa-angle-down u-header__nav-link-icon"></span>
+                  Freelancer
+                 <!-- <span class="fa fa-angle-down u-header__nav-link-icon"></span>-->
+                </a>
+                  <!-- Account -->
+
+
+
+
+
+                <!-- Home - Mega Menu -->
+                <div class="hs-mega-menu u-header__sub-menu w-100 u-header__mega-menu-wrapper-v2" aria-labelledby="homeMegaMenu">
+                  <div class="row p-0 mr-0">
+                    <div class="col-lg-6 pr-0">
+                      <!-- Banner Image -->
+                      <div class="d-none d-lg-block u-header__banner-v1" data-bg-img-src="{% static 'assets/img/750x750/img1.jpg' %}">
+                        <div class="w-100 text-center u-header__banner-v1-content u-content-centered-y p-4">
+                          <div class="mb-4">
+                            <strong class="d-block u-header__banner-v1-title mb-2">Branding Works</strong>
+                            <span class="u-header__banner-v1-text">Experience a level of our quality in both design &amp; customization works.</span>
+                          </div>
+                          <a class="btn btn-primary u-btn-primary btn-sm transition-3d-hover" href="#">Learn More <span class="fa fa-angle-right ml-2"></span></a>
+                        </div>
+                      </div>
+                      <!-- End Banner Image -->
+                    </div>
+
+                    <div class="col-lg-6 u-header__mega-menu-wrapper-v3">
+                      <div class="row u-header__mega-menu-wrapper-v1">
+                        <div class="col-sm-6">
+                          <strong class="d-block mb-2">Classic</strong>
+
+                          <!-- Links -->
+                          <ul class="list-unstyled mb-4">
+                           <!-- <li><a class="nav-link u-list__link py-2 px-0" href="index.html">Classic Agency</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="classic-crypto.html">Classic Crypto</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="classic-business.html">Classic Business</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="classic-marketing.html">Classic Marketing</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="classic-consulting.html">Classic Consulting</a></li>-->
+                          </ul>
+                          <!-- End Links -->
+
+                          <strong class="d-block mb-2">Corporate</strong>
+
+                          <!-- Links -->
+                          <ul class="list-unstyled mb-4">
+                         <!--   <li><a class="nav-link u-list__link py-2 px-0" href="corporate-agency.html">Corporate Agency</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="corporate-start-up.html">Corporate Start-Up</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="corporate-business.html">Corporate Business <span class="badge badge-success ml-1">New</span></a></li>-->
+                          </ul>
+                          <!-- End Links -->
+                        </div>
+
+                        <div class="col-sm-6">
+                          <strong class="d-block mb-2">Landing</strong>
+
+                          <!-- Links -->
+                          <ul class="list-unstyled mb-4">
+                          <!--  <li><a class="nav-link u-list__link py-2 px-0" href="landing-house.html">Landing House <span class="badge badge-success ml-1">New</span></a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="landing-job.html">Landing Job <span class="badge badge-success ml-1">New</span></a></li>-->
+                          </ul>
+                          <!-- End Links -->
+
+                          <strong class="d-block mb-2">Blog</strong>
+
+                          <!-- Links -->
+                          <ul class="list-unstyled mb-4">
+                          <!--  <li><a class="nav-link u-list__link py-2 px-0" href="blog-agency.html">Blog Agency</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="blog-start-up.html">Blog Start-Up</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="blog-business.html">Blog Business</a></li>-->
+                          </ul>
+                          <!-- End Links -->
+
+                          <strong class="d-block mb-2">Portfolio</strong>
+
+                          <!-- Links -->
+
+                          <ul class="list-unstyled u-list">
+                            <li><a class="nav-link u-list__link py-2 px-0" href="portfolio-agency.html">Portfolio Agency</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="portfolio-profile.html">Portfolio Profile</a></li>
+                          </ul>
+                          <!-- End Links -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- End Home - Mega Menu -->
+              </li>
+              <div id="navBar" class="collapse navbar-collapse py-0">
+            <ul class="navbar-nav u-header__navbar-nav ml-lg-auto">
+              <!-- Home -->
+              <!--<li class="nav-item hs-has-mega-menu u-header__nav-item"
+                  data-event="hover"
+                  data-animation-in="slideInUp"
+                  data-animation-out="fadeOut"
+                  data-position="left">-->
+                <a id="homeMegaMenu" class="nav-link u-header__nav-link pl-0" href="../joblist/"
+                   aria-haspopup="true"
+                   aria-expanded="false">
+                  Jobs
+                 <!-- <span class="fa fa-angle-down u-header__nav-link-icon"></span>-->
                 </a>
 
-                <!-- Works - Mega Menu -->
-                <div class="hs-mega-menu w-100 u-header__sub-menu u-header__mega-menu-wrapper-v1" aria-labelledby="worksMegaMenu">
-                  <div class="row">
-                    <div class="col-sm-6 col-lg-3 mb-3 mb-lg-0">
-
-                      <strong class="d-block mb-2">Available for You</strong>
-
-                      <!-- Links -->
-                      <ul class="list-unstyled u-list">
-						  {% if user.is_authenticated %}
-						    {% if user.freelancer == True %}
-						  <li><a class="nav-link u-list__link py-2 px-0" href="../joblist/">Jobs available</a></li>
-						   {% endif %}
-						  {% endif %}
-						  {% if user.is_authenticated %}
-						   {% if user.jopublisher == True %}
-						  <li><a class="nav-link u-list__link py-2 px-0" href="../profilelist/">Freelancer list</a></li>
-						   {% endif %}
-						  {% endif %}
-						  {% if user.is_authenticated == False %}
-						   <a class="nav-link u-list__link px-4" href="../joblist/">- Available jobs</a>
-						  <a class="nav-link u-list__link px-4" href="../profilelist/">- Available freelancer</a>
-
-                          {% endif %}
-                        <!--<li><a class="nav-link u-list__link py-2 px-0" href="../arts-crafts/">Art and Design</a></li>
-                      <!--  <li><a class="nav-link u-list__link py-2 px-0" href="#">Career & jobs</a></li>
-                        <li><a class="nav-link u-list__link py-2 px-0" href="#">Food & Drinks</a></li>
-                        <li><a class="nav-link u-list__link py-2 px-0" href="#">Events & lifestyle</a></li>
-
-                      </ul>
-                      <!-- End Links -->
+                <!-- Home - Mega Menu -->
+                <div class="hs-mega-menu u-header__sub-menu w-100 u-header__mega-menu-wrapper-v2" aria-labelledby="homeMegaMenu">
+                  <div class="row p-0 mr-0">
+                    <div class="col-lg-6 pr-0">
+                      <!-- Banner Image -->
+                      <div class="d-none d-lg-block u-header__banner-v1" data-bg-img-src="{% static 'assets/img/750x750/img1.jpg' %}">
+                        <div class="w-100 text-center u-header__banner-v1-content u-content-centered-y p-4">
+                          <div class="mb-4">
+                            <strong class="d-block u-header__banner-v1-title mb-2">Branding Works</strong>
+                            <span class="u-header__banner-v1-text">Experience a level of our quality in both design &amp; customization works.</span>
+                          </div>
+                          <a class="btn btn-primary u-btn-primary btn-sm transition-3d-hover" href="#">Learn More <span class="fa fa-angle-right ml-2"></span></a>
+                        </div>
+                      </div>
+                      <!-- End Banner Image -->
                     </div>
-<!--
-                    <div class="col-sm-6 col-lg-3 mb-3 mb-lg-0">
+
+                    <div class="col-lg-6 u-header__mega-menu-wrapper-v3">
+                      <div class="row u-header__mega-menu-wrapper-v1">
+                        <div class="col-sm-6">
+                          <strong class="d-block mb-2">Classic</strong>
+
+                          <!-- Links -->
+                          <ul class="list-unstyled mb-4">
+                           <!-- <li><a class="nav-link u-list__link py-2 px-0" href="index.html">Classic Agency</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="classic-crypto.html">Classic Crypto</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="classic-business.html">Classic Business</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="classic-marketing.html">Classic Marketing</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="classic-consulting.html">Classic Consulting</a></li>-->
+                          </ul>
+                          <!-- End Links -->
+
+                          <strong class="d-block mb-2">Corporate</strong>
+
+                          <!-- Links -->
+                          <ul class="list-unstyled mb-4">
+                         <!--   <li><a class="nav-link u-list__link py-2 px-0" href="corporate-agency.html">Corporate Agency</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="corporate-start-up.html">Corporate Start-Up</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="corporate-business.html">Corporate Business <span class="badge badge-success ml-1">New</span></a></li>-->
+                          </ul>
+                          <!-- End Links -->
+                        </div>
+
+                        <div class="col-sm-6">
+                          <strong class="d-block mb-2">Landing</strong>
+
+                          <!-- Links -->
+                          <ul class="list-unstyled mb-4">
+                          <!--  <li><a class="nav-link u-list__link py-2 px-0" href="landing-house.html">Landing House <span class="badge badge-success ml-1">New</span></a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="landing-job.html">Landing Job <span class="badge badge-success ml-1">New</span></a></li>-->
+                          </ul>
+                          <!-- End Links -->
+
+                          <strong class="d-block mb-2">Blog</strong>
+
+                          <!-- Links -->
+                          <ul class="list-unstyled mb-4">
+                          <!--  <li><a class="nav-link u-list__link py-2 px-0" href="blog-agency.html">Blog Agency</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="blog-start-up.html">Blog Start-Up</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="blog-business.html">Blog Business</a></li>-->
+                          </ul>
+                          <!-- End Links -->
+
+                          <strong class="d-block mb-2">Portfolio</strong>
+
+                          <!-- Links -->
+
+                          <ul class="list-unstyled u-list">
+                            <li><a class="nav-link u-list__link py-2 px-0" href="portfolio-agency.html">Portfolio Agency</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="portfolio-profile.html">Portfolio Profile</a></li>
+                          </ul>
+                          <!-- End Links -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- End Home - Mega Menu -->
+              </li>
+
+
+
+
+
+
+
+
+                 <!--   <div class="col-sm-6 col-lg-3 mb-3 mb-lg-0">
                       <strong class="d-block mb-2">Full Width Layouts</strong>
 
                       <!-- Links -->
@@ -791,39 +1046,109 @@
                       </ul>
                       <!-- End Links -->
                     <!--</div>-->
-                  </div>
-                </div>
-                <!-- End Works - Mega Menu -->
-              </li>
+
               <!-- End Works -->
 
               <!-- Blog -->
-				<li class="nav-item hs-has-mega-menu u-header__nav-item"
+				<ul class="navbar-nav u-header__navbar-nav ml-lg-auto">
+              <!-- Home -->
+              <!--<li class="nav-item hs-has-mega-menu u-header__nav-item"
                   data-event="hover"
                   data-animation-in="slideInUp"
                   data-animation-out="fadeOut"
-                  data-position="right">
-                <a id="worksMegaMenu" class="nav-link u-header__nav-link" href="javascript:;"
+                  data-position="left">-->
+
+                 <a id="homeMegaMenu" class="nav-link u-header__nav-link pl-0" href="../blogging/"
                    aria-haspopup="true"
                    aria-expanded="false">
-                  Blog
-                  <span class="fa fa-angle-down u-header__nav-link-icon"></span>
+                  Blogs
+                 <!-- <span class="fa fa-angle-down u-header__nav-link-icon"></span>-->
                 </a>
-
-                <!-- Works - Mega Menu -->
-                <div class="hs-mega-menu w-100 u-header__sub-menu u-header__mega-menu-wrapper-v1" aria-labelledby="worksMegaMenu">
-                  <div class="row">
-                    <div class="col-sm-6 col-lg-3 mb-3 mb-lg-0">
-                      <!--<strong class="d-block mb-2">Boxed Layouts</strong>
+                  <!-- Account -->
 
 
-                      <!-- Links -->
-                      <ul class="list-unstyled u-list">
-                        <li><a class="nav-link u-list__link py-2 px-0" href="../blogging/">Blogs List </a></li>
 
-                      </ul>
-                      <!-- End Links -->
+
+
+                <!-- Home - Mega Menu -->
+                <div class="hs-mega-menu u-header__sub-menu w-100 u-header__mega-menu-wrapper-v2" aria-labelledby="homeMegaMenu">
+                  <div class="row p-0 mr-0">
+                    <div class="col-lg-6 pr-0">
+                      <!-- Banner Image -->
+                      <div class="d-none d-lg-block u-header__banner-v1" data-bg-img-src="{% static 'assets/img/750x750/img1.jpg' %}">
+                        <div class="w-100 text-center u-header__banner-v1-content u-content-centered-y p-4">
+                          <div class="mb-4">
+                            <strong class="d-block u-header__banner-v1-title mb-2">Branding Works</strong>
+                            <span class="u-header__banner-v1-text">Experience a level of our quality in both design &amp; customization works.</span>
+                          </div>
+                          <a class="btn btn-primary u-btn-primary btn-sm transition-3d-hover" href="#">Learn More <span class="fa fa-angle-right ml-2"></span></a>
+                        </div>
+                      </div>
+                      <!-- End Banner Image -->
                     </div>
+
+                    <div class="col-lg-6 u-header__mega-menu-wrapper-v3">
+                      <div class="row u-header__mega-menu-wrapper-v1">
+                        <div class="col-sm-6">
+                          <strong class="d-block mb-2">Classic</strong>
+
+                          <!-- Links -->
+                          <ul class="list-unstyled mb-4">
+                           <!-- <li><a class="nav-link u-list__link py-2 px-0" href="index.html">Classic Agency</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="classic-crypto.html">Classic Crypto</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="classic-business.html">Classic Business</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="classic-marketing.html">Classic Marketing</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="classic-consulting.html">Classic Consulting</a></li>-->
+                          </ul>
+                          <!-- End Links -->
+
+                          <strong class="d-block mb-2">Corporate</strong>
+
+                          <!-- Links -->
+                          <ul class="list-unstyled mb-4">
+                         <!--   <li><a class="nav-link u-list__link py-2 px-0" href="corporate-agency.html">Corporate Agency</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="corporate-start-up.html">Corporate Start-Up</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="corporate-business.html">Corporate Business <span class="badge badge-success ml-1">New</span></a></li>-->
+                          </ul>
+                          <!-- End Links -->
+                        </div>
+
+                        <div class="col-sm-6">
+                          <strong class="d-block mb-2">Landing</strong>
+
+                          <!-- Links -->
+                          <ul class="list-unstyled mb-4">
+                          <!--  <li><a class="nav-link u-list__link py-2 px-0" href="landing-house.html">Landing House <span class="badge badge-success ml-1">New</span></a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="landing-job.html">Landing Job <span class="badge badge-success ml-1">New</span></a></li>-->
+                          </ul>
+                          <!-- End Links -->
+
+                          <strong class="d-block mb-2">Blog</strong>
+
+                          <!-- Links -->
+                          <ul class="list-unstyled mb-4">
+                          <!--  <li><a class="nav-link u-list__link py-2 px-0" href="blog-agency.html">Blog Agency</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="blog-start-up.html">Blog Start-Up</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="blog-business.html">Blog Business</a></li>-->
+                          </ul>
+                          <!-- End Links -->
+
+                          <strong class="d-block mb-2">Portfolio</strong>
+
+                          <!-- Links -->
+
+                          <ul class="list-unstyled u-list">
+                            <li><a class="nav-link u-list__link py-2 px-0" href="portfolio-agency.html">Portfolio Agency</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="portfolio-profile.html">Portfolio Profile</a></li>
+                          </ul>
+                          <!-- End Links -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- End Home - Mega Menu -->
+              </li>
               <!--<li class="nav-item hs-has-sub-menu u-header__nav-item"
                   data-event="hover"
                   data-animation-in="slideInUp"
@@ -1074,7 +1399,7 @@
               <li class="nav-item d-none d-md-inline-block pl-3 pr-0">
 				  {% if user.is_authenticated %}
 				    {% if user.jopublisher == True %}
-                <a class="btn btn-sm btn-primary u-btn-primary transition-3d-hover" href="../ad-jobs/" target="_blank">
+                <a class="btn btn-sm btn-primary u-btn-primary transition-3d-hover" href="../ad-jobs/" >
                   Post Job
                 </a>
 
@@ -1082,7 +1407,7 @@
 				  {% endif %}
 				  {% if user.is_authenticated %}
 				    {% if user.freelancer == True %}
-                <a class="btn btn-sm btn-primary u-btn-primary transition-3d-hover" href="../joblist/" target="_blank">
+                <a class="btn btn-sm btn-primary u-btn-primary transition-3d-hover" href="../joblist/" >
                   Apply for job
                 </a>
 
@@ -1105,12 +1430,35 @@
   <!-- ========== MAIN ========== -->
 
   <main id="content" role="main">
-    <!-- Hero Section -->
-    <div class="position-relative u-bg-light-blue-50 overflow-hidden">
+    <!-- map section -->
+   <!-- <div class="position-relative u-bg-light-blue-50 overflow-hidden">-->
+     <div class="container position-relative u-space-1">
+
+        <div class="row">
+              <div class="col-lg-5 mb-4 mb-lg-0">
+                <!-- Input -->
+               <form  method ="GET" action=".">
+                <div class="js-focus-state input-group u-form u-form--no-addon-brd">
+                  <input type="search" id="input-map" class="form-control" placeholder="Enter location?" name="input"  />
+                </div>
+                <!-- End Input -->
+              </div>
+              <div class="col-lg-2 align-self-lg-end">
+                <button class="btn btn-block btn-primary u-btn-primary transition-3d-hover" id="submit" >Find Jobs</button>
+              </div>
+		</form>
+		</div>
+
+		 </div>
+
+    <div class="container position-relative u-space-1-top u-space-1-top--md u-space-1-bottom z-index-2">
 
 
+		<div id="map-example-container"></div>
 
-          <div class="container position-relative u-space-4-top u-space-5-top--md u-space-4-bottom z-index-2" id="mapid"></div>
+
+	</div>
+
 
 <!-- Default map with 300x400 dimensions -->
 
@@ -1123,7 +1471,7 @@
 
 
       <!-- SVG Background Left Top Shape -->
-      <figure class="w-100 w-md-75 w-lg-50 position-absolute-top-left-0 mx-auto">
+     <!-- <figure class="w-100 w-md-75 w-lg-50 position-absolute-top-left-0 mx-auto">
         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
              viewBox="0 0 900 919" style="enable-background:new 0 0 900 919;" xml:space="preserve">
           <linearGradient id="heroPathID1" gradientUnits="userSpaceOnUse" x1="0" y1="501" x2="599" y2="501">
@@ -1147,7 +1495,7 @@
       <!-- End SVG Background Left Top Shape -->
 
       <!-- SVG Background -->
-      <figure class="position-absolute-bottom-0">
+     <!-- <figure class="position-absolute-bottom-0">
         <svg preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
             width="100%" height="140px" viewBox="20 -20 300 100" style="margin-bottom: -8px;" xml:space="preserve">
           <path class="u-fill-primary" opacity=".075" d="M30.913,43.944c0,0,42.911-34.464,87.51-14.191c77.31,35.14,113.304-1.952,146.638-4.729
@@ -1161,7 +1509,7 @@
         </svg>
       </figure>
       <!-- End SVG Background Section -->
-    </div>
+    <!--</div>
     <!-- End Hero Section -->
 
     <!-- Portfolio Section -->
@@ -1193,7 +1541,7 @@
             ]'>
 			{% load i18n cms_tags thumbnail %}
           <!-- Item -->
-			{% for item in jobs %}
+			{% for item in job %}
           <div class="cbp-item rounded graphic">
             <a class="cbp-caption" href="{% url 'job_with_pk' pk=item.pk  %}">
               <div class="cbp-caption-defaultWrap">
@@ -1213,6 +1561,7 @@
             </a>
           </div>
 			{% endfor %}
+			<p id="p-text">foo bar</p>
           <!-- End Item -->
 
           <!-- Item -->
@@ -1534,7 +1883,7 @@
       </div>
 
       <!-- Pagination -->
-      <nav aria-label="Page navigation">
+     <!-- <nav aria-label="Page navigation">
         <ul class="pagination justify-content-center">
           <li class="page-item">
             <a class="page-link" href="#" aria-label="Previous">
@@ -1553,7 +1902,7 @@
             </a>
           </li>
         </ul>
-      </nav>
+      </nav>-->
       <!-- End Pagination -->
     </div>
     <!-- End Portfolio Section -->
@@ -2097,9 +2446,10 @@
   {% addtoblock "js" %}<script src="{% static 'assets/js/components/hs.show-animation.js' %}"></script>{% endaddtoblock %}
   {% addtoblock "js" %}<script src="{% static 'assets/js/components/hs.cubeportfolio.js' %}"></script>{% endaddtoblock %}
   {% addtoblock "js" %}<script src="{% static 'assets/js/components/hs.go-to.js' %}"></script>{% endaddtoblock %}
-  {% addtoblock "js" %}<script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
-   integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
-   crossorigin=""></script>{% endaddtoblock %}
+  {% addtoblock "js" %}<script src="https://cdn.jsdelivr.net/leaflet/1/leaflet.js"></script>{% endaddtoblock %}
+   {% addtoblock "js" %}<script src="https://cdn.jsdelivr.net/npm/places.js@1.16.4"></script>{% endaddtoblock %}
+
+
   {% block js %}
   <!-- JS Plugins Init. -->
   <script>
@@ -2149,36 +2499,126 @@
       $.HSCore.components.HSGoTo.init('.js-go-to');
     });
 
+    (function() {
+  var placesAutocomplete = places({
+    appId: 'pl1AKTQR328T',
+    apiKey: '3c96460cb91f2915ffe65c37874c4f75',
+    container: document.querySelector('#input-map')
+  });
 
+  var map = L.map('map-example-container', {
+    scrollWheelZoom: false,
+    zoomControl: false
+  });
 
+  var osmLayer = new L.TileLayer(
+    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      minZoom: 1,
+      maxZoom: 13,
+      attribution: 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors'
+    }
+  );
 
-	var mymap = L.map('mapid').setView([38.908484, -77.035143], 13);
+  var markers = [];
 
-	L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
-		maxZoom: 18,
-		attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
-			'<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-			'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-		id: 'mapbox.streets'
-	}).addTo(mymap);
+  map.setView(new L.LatLng(0, 0), 1);
+  map.addLayer(osmLayer);
 
-	L.marker([38.908484, -77.035143]).addTo(mymap)
-		.bindPopup("<b> USA !</b><br />Washington D.C., DC,.").openPopup();
+  placesAutocomplete.on('suggestions', handleOnSuggestions);
+  placesAutocomplete.on('cursorchanged', handleOnCursorchanged);
+  placesAutocomplete.on('change', handleOnChange);
+  placesAutocomplete.on('clear', handleOnClear);
 
-	L.circle([38.908484, -77.035143], 500, {
-		color: 'red',
-		fillColor: '#f03',
-		fillOpacity: 0.5
-	}).addTo(mymap).bindPopup("I am a circle.");
+  function handleOnSuggestions(e) {
+    markers.forEach(removeMarker);
+    markers = [];
 
-	L.polygon([
-		[38.908484, -0.08],
-		[38.908484, -0.06],
-		[38.908484, -0.047]
-	]).addTo(mymap).bindPopup("I am a polygon.");
+    if (e.suggestions.length === 0) {
+      map.setView(new L.LatLng(0, 0), 1);
+      return;
+    }
 
+    e.suggestions.forEach(addMarker);
+    findBestZoom();
+  }
 
-	var popup = L.popup();
+  function handleOnChange(e) {
+    markers
+      .forEach(function(marker, markerIndex) {
+        if (markerIndex === e.suggestionIndex) {
+          markers = [marker];
+          marker.setOpacity(1);
+          findBestZoom();
+        } else {
+          removeMarker(marker);
+        }
+      });
+  }
+
+  function handleOnClear() {
+    map.setView(new L.LatLng(0, 0), 1);
+    markers.forEach(removeMarker);
+  }
+
+  function handleOnCursorchanged(e) {
+    markers
+      .forEach(function(marker, markerIndex) {
+        if (markerIndex === e.suggestionIndex) {
+          marker.setOpacity(1);
+          marker.setZIndexOffset(1000);
+        } else {
+          marker.setZIndexOffset(0);
+          marker.setOpacity(0.5);
+        }
+      });
+  }
+
+  function addMarker(suggestion) {
+    var marker = L.marker(suggestion.latlng, {opacity: .4});
+    marker.addTo(map);
+    markers.push(marker);
+  }
+
+  function removeMarker(marker) {
+    map.removeLayer(marker);
+  }
+
+  function findBestZoom() {
+    var featureGroup = L.featureGroup(markers);
+    map.fitBounds(featureGroup.getBounds().pad(0.5), {animate: false});
+  }
+})();
+
+    function fun() {
+    $('#input-map').attr({'value':'previous'});
+    $.ajax({
+        url: '../joblist/to/jobindex/',
+        type: 'GET',
+        data: {'txt': $('#input-map').val()},
+        success: function() {
+            window.alert('Success!');
+        },
+        error: function() {
+            window.alert('Error!!!');
+        }
+    });
+}
+
+$("#submit").click(function(){
+
+	var input = $('#input-map').val();
+
+	$.ajax({
+		url: '{% url 'joblist' %}',
+		data :{
+			'inputValue' : input
+		},
+		dataType: 'json',
+		success: function(data,textStatus,request){
+			console.log(data)
+		}
+	});
+});
 
 
   </script>

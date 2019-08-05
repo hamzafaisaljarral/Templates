@@ -14,6 +14,38 @@
   <!-- Favicon
   <link rel="shortcut icon" href="../../favicon.ico">
   -->
+	{% block css %}
+	<style>
+
+
+
+
+  .suggestion-name {
+    margin-left: 4px;
+    margin-right: 4px;
+    flex-grow: 0;
+    flex-shrink: 0;
+  }
+
+  .suggestion-address {
+    flex-grow: 1;
+    flex-shrink: 1;
+    margin-right: 8px;
+    font-size: 0.8em;
+    color: rgba(74, 74, 76, 0.5);
+  }
+
+  .suggestion-precision {
+    width: 20px;
+    height: 20px;
+    margin-left: 8px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    animation: none;
+  }
+</style>
+	{% endblock css %}
    {% render_block "css"  %}
 
   <!-- Google Fonts -->
@@ -158,7 +190,7 @@
                       <strong class="d-block mb-2">Featured Item</strong>
                       <p>Create astonishing web sites and pages.</p>
                     </div>
-                    <a class="btn btn-xs u-btn-success--air transition-3d-hover" href="index.html">Apply Now <span class="fa fa-angle-right ml-2"></span></a>
+                    <a class="btn btn-xs u-btn-success--air transition-3d-hover" href="#">Apply Now <span class="fa fa-angle-right ml-2"></span></a>
                   </div>
                 </div>
               </div>
@@ -205,7 +237,7 @@
 
           <div class="ml-auto">
             <!-- Jump To -->
-            <div class="d-inline-block d-sm-none position-relative mr-2">
+          <!--  <div class="d-inline-block d-sm-none position-relative mr-2">
               <a id="jumpToDropdownInvoker" class="d-flex align-items-center u-unfold-wrapper" href="javascript:;" role="button"
                  aria-controls="jumpToDropdown"
                  aria-haspopup="true"
@@ -230,7 +262,7 @@
             <!-- End Jump To -->
 
             <!-- Links -->
-            <div class="d-none d-sm-inline-block ml-sm-auto">
+           <!--- <div class="d-none d-sm-inline-block ml-sm-auto">
               <ul class="list-inline mb-0">
                 <li class="list-inline-item mr-0">
                   <a class="u-header__topbar-nav-link" href="../pages/help.html">Help</a>
@@ -285,7 +317,7 @@
         <!-- Nav -->
         <nav class="js-mega-menu navbar navbar-expand-md u-header__navbar">
           <!-- Logo -->
-          <a class="navbar-brand u-header__navbar-brand u-header__navbar-brand-top-space" href="index.html" aria-label="Front">
+          <a class="navbar-brand u-header__navbar-brand u-header__navbar-brand-top-space" href="#" aria-label="Front">
             <img src="{% static 'assets/svg/logos/logo.svg' %}" alt="Logo">
           </a>
           <!-- End Logo -->
@@ -401,79 +433,143 @@
               <!-- End Home -->
 
               <!-- Pages -->
-              <li class="nav-item hs-has-sub-menu u-header__nav-item"
+				<ul class="navbar-nav u-header__navbar-nav ml-lg-auto">
+              <!-- Home -->
+              <!--<li class="nav-item hs-has-mega-menu u-header__nav-item"
                   data-event="hover"
                   data-animation-in="slideInUp"
-                  data-animation-out="fadeOut">
-                <a id="pagesMegaMenu" class="nav-link u-header__nav-link" href="javascript:;"
-                   aria-haspopup="true"
-                   aria-expanded="false"
-                   aria-labelledby="pagesSubMenu">
-                  Account
-                  <span class="fa fa-angle-down u-header__nav-link-icon"></span>
-                </a>
-
-                <!-- Pages - Submenu -->
-				  {% if user.is_authenticated %}
+                  data-animation-out="fadeOut"
+                  data-position="left">-->
+                 {% if user.is_authenticated %}
 						    {% if user.freelancer == True %}
-                <ul id="pagesSubMenu" class="list-inline hs-sub-menu u-header__sub-menu py-3 mb-0" style="min-width: 220px;"
-                    aria-labelledby="pagesMegaMenu">
+                 <a id="homeMegaMenu" class="nav-link u-header__nav-link pl-0" href="{% url 'profile_with_pk' pk=user.pk  %}"
+                   aria-haspopup="true"
+                   aria-expanded="false">
+                  Profile
+                 <!-- <span class="fa fa-angle-down u-header__nav-link-icon"></span>-->
+                </a>
                   <!-- Account -->
-                  <li class="dropdown-item px-0">
-                    <a id="navLinkPagesAccount" class="nav-link u-header__sub-menu-nav-link u-list__link py-2" href="{% url 'profile_with_pk' pk=user.pk  %}"
-                       >
-                      Profile
-                    </a>
-				  </li>
-				</ul>
 
 					  {% endif %}
 					  {% endif %}
 
 					  {% if user.is_authenticated %}
 						    {% if user.Jopublisher == True %}
-				<ul id="pagesSubMenu" class="list-inline hs-sub-menu u-header__sub-menu py-3 mb-0" style="min-width: 220px;"
-                    aria-labelledby="pagesMegaMenu">
-                  <li class="dropdown-item px-0">
-                    <a id="navLinkPagesAccount" class="nav-link u-header__sub-menu-nav-link u-list__link py-2" href="../userjoblist/"
-                       >
-                      Profile
-                    </a>
-				</li>
-				</ul>
+
+				 <a id="homeMegaMenu" class="nav-link u-header__nav-link pl-0" href="../userjoblist/"
+                   aria-haspopup="true"
+                   aria-expanded="false">
+                  Profile
+                 <!-- <span class="fa fa-angle-down u-header__nav-link-icon"></span>-->
+                </a>
+
+
 					  {% endif %}
 					  {% endif %}
 					{% if user.is_authenticated == False %}
-				<ul id="pagesSubMenu" class="list-inline hs-sub-menu u-header__sub-menu py-3 mb-0" style="min-width: 220px;"
-                    aria-labelledby="pagesMegaMenu">
-
-                  <li class="dropdown-item px-0">
-                    <a id="navLinkPagesAccount" class="nav-link u-header__sub-menu-nav-link u-list__link py-2" href="/login/"
-                       >
-                      Login First
-                    </a>
-				</li>
-				</ul>
+				  <a id="homeMegaMenu" class="nav-link u-header__nav-link pl-0" href="/login/"
+                   aria-haspopup="true"
+                   aria-expanded="false">
+                  Profile
+                 <!-- <span class="fa fa-angle-down u-header__nav-link-icon"></span>-->
+                </a>
 					  {% endif %}
+
+
+                <!-- Home - Mega Menu -->
+                <div class="hs-mega-menu u-header__sub-menu w-100 u-header__mega-menu-wrapper-v2" aria-labelledby="homeMegaMenu">
+                  <div class="row p-0 mr-0">
+                    <div class="col-lg-6 pr-0">
+                      <!-- Banner Image -->
+                      <div class="d-none d-lg-block u-header__banner-v1" data-bg-img-src="{% static 'assets/img/750x750/img1.jpg' %}">
+                        <div class="w-100 text-center u-header__banner-v1-content u-content-centered-y p-4">
+                          <div class="mb-4">
+                            <strong class="d-block u-header__banner-v1-title mb-2">Branding Works</strong>
+                            <span class="u-header__banner-v1-text">Experience a level of our quality in both design &amp; customization works.</span>
+                          </div>
+                          <a class="btn btn-primary u-btn-primary btn-sm transition-3d-hover" href="#">Learn More <span class="fa fa-angle-right ml-2"></span></a>
+                        </div>
+                      </div>
+                      <!-- End Banner Image -->
+                    </div>
+
+                    <div class="col-lg-6 u-header__mega-menu-wrapper-v3">
+                      <div class="row u-header__mega-menu-wrapper-v1">
+                        <div class="col-sm-6">
+                          <strong class="d-block mb-2">Classic</strong>
+
+                          <!-- Links -->
+                          <ul class="list-unstyled mb-4">
+                           <!-- <li><a class="nav-link u-list__link py-2 px-0" href="index.html">Classic Agency</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="classic-crypto.html">Classic Crypto</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="classic-business.html">Classic Business</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="classic-marketing.html">Classic Marketing</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="classic-consulting.html">Classic Consulting</a></li>-->
+                          </ul>
+                          <!-- End Links -->
+
+                          <strong class="d-block mb-2">Corporate</strong>
+
+                          <!-- Links -->
+                          <ul class="list-unstyled mb-4">
+                         <!--   <li><a class="nav-link u-list__link py-2 px-0" href="corporate-agency.html">Corporate Agency</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="corporate-start-up.html">Corporate Start-Up</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="corporate-business.html">Corporate Business <span class="badge badge-success ml-1">New</span></a></li>-->
+                          </ul>
+                          <!-- End Links -->
+                        </div>
+
+                        <div class="col-sm-6">
+                          <strong class="d-block mb-2">Landing</strong>
+
+                          <!-- Links -->
+                          <ul class="list-unstyled mb-4">
+                          <!--  <li><a class="nav-link u-list__link py-2 px-0" href="landing-house.html">Landing House <span class="badge badge-success ml-1">New</span></a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="landing-job.html">Landing Job <span class="badge badge-success ml-1">New</span></a></li>-->
+                          </ul>
+                          <!-- End Links -->
+
+                          <strong class="d-block mb-2">Blog</strong>
+
+                          <!-- Links -->
+                          <ul class="list-unstyled mb-4">
+                          <!--  <li><a class="nav-link u-list__link py-2 px-0" href="blog-agency.html">Blog Agency</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="blog-start-up.html">Blog Start-Up</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="blog-business.html">Blog Business</a></li>-->
+                          </ul>
+                          <!-- End Links -->
+
+                          <strong class="d-block mb-2">Portfolio</strong>
+
+                          <!-- Links -->
+
+                          <ul class="list-unstyled u-list">
+                            <li><a class="nav-link u-list__link py-2 px-0" href="portfolio-agency.html">Portfolio Agency</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="portfolio-profile.html">Portfolio Profile</a></li>
+                          </ul>
+                          <!-- End Links -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- End pages - Mega Menu -->
+              </li>
+
+
+
+
+
+
+
+
+
+
 
 
                     <!-- Submenu (level 2) -->
 
-                    <ul id="navSubmenuPagesAccount" class="hs-sub-menu list-unstyled u-header__sub-menu u-header__sub-menu-menu-gutter--y u-header__sub-menu-offset" style="min-width: 220px;"
-                        aria-labelledby="navLinkPagesAccount">
-                     <!-- <li class="dropdown-item px-0">
-                        <a class="nav-link u-list__link px-4" href="#">Dashboard</a>
-                      </li>-->
-                      <li class="dropdown-item px-0">
 
-
-						  {% if user.is_authenticated %}
-						   {% if user.jopublisher == True %}
-						  <a class="nav-link u-list__link px-4" href="../userjoblist/">Profile</a>
-						   {% endif %}
-						  {% endif %}
-
-                      </li>
                       <!--<li class="dropdown-item px-0">
                         <a class="nav-link u-list__link px-4" href="#">My tasks</a>
                       </li>-->
@@ -704,52 +800,208 @@
               <!-- End Pages -->
 
               <!-- Works -->
-              <li class="nav-item hs-has-mega-menu u-header__nav-item"
+			<ul class="navbar-nav u-header__navbar-nav ml-lg-auto">
+              <!-- Home -->
+              <!--<li class="nav-item hs-has-mega-menu u-header__nav-item"
                   data-event="hover"
                   data-animation-in="slideInUp"
                   data-animation-out="fadeOut"
-                  data-position="right">
-                <a id="worksMegaMenu" class="nav-link u-header__nav-link" href="javascript:;"
+                  data-position="left">-->
+
+                 <a id="homeMegaMenu" class="nav-link u-header__nav-link pl-0" href="../profilelist/"
                    aria-haspopup="true"
                    aria-expanded="false">
-                  Pages
-                  <span class="fa fa-angle-down u-header__nav-link-icon"></span>
+                  Freelancer
+                 <!-- <span class="fa fa-angle-down u-header__nav-link-icon"></span>-->
+                </a>
+                  <!-- Account -->
+
+
+
+
+
+                <!-- Home - Mega Menu -->
+                <div class="hs-mega-menu u-header__sub-menu w-100 u-header__mega-menu-wrapper-v2" aria-labelledby="homeMegaMenu">
+                  <div class="row p-0 mr-0">
+                    <div class="col-lg-6 pr-0">
+                      <!-- Banner Image -->
+                      <div class="d-none d-lg-block u-header__banner-v1" data-bg-img-src="{% static 'assets/img/750x750/img1.jpg' %}">
+                        <div class="w-100 text-center u-header__banner-v1-content u-content-centered-y p-4">
+                          <div class="mb-4">
+                            <strong class="d-block u-header__banner-v1-title mb-2">Branding Works</strong>
+                            <span class="u-header__banner-v1-text">Experience a level of our quality in both design &amp; customization works.</span>
+                          </div>
+                          <a class="btn btn-primary u-btn-primary btn-sm transition-3d-hover" href="#">Learn More <span class="fa fa-angle-right ml-2"></span></a>
+                        </div>
+                      </div>
+                      <!-- End Banner Image -->
+                    </div>
+
+                    <div class="col-lg-6 u-header__mega-menu-wrapper-v3">
+                      <div class="row u-header__mega-menu-wrapper-v1">
+                        <div class="col-sm-6">
+                          <strong class="d-block mb-2">Classic</strong>
+
+                          <!-- Links -->
+                          <ul class="list-unstyled mb-4">
+                           <!-- <li><a class="nav-link u-list__link py-2 px-0" href="index.html">Classic Agency</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="classic-crypto.html">Classic Crypto</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="classic-business.html">Classic Business</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="classic-marketing.html">Classic Marketing</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="classic-consulting.html">Classic Consulting</a></li>-->
+                          </ul>
+                          <!-- End Links -->
+
+                          <strong class="d-block mb-2">Corporate</strong>
+
+                          <!-- Links -->
+                          <ul class="list-unstyled mb-4">
+                         <!--   <li><a class="nav-link u-list__link py-2 px-0" href="corporate-agency.html">Corporate Agency</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="corporate-start-up.html">Corporate Start-Up</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="corporate-business.html">Corporate Business <span class="badge badge-success ml-1">New</span></a></li>-->
+                          </ul>
+                          <!-- End Links -->
+                        </div>
+
+                        <div class="col-sm-6">
+                          <strong class="d-block mb-2">Landing</strong>
+
+                          <!-- Links -->
+                          <ul class="list-unstyled mb-4">
+                          <!--  <li><a class="nav-link u-list__link py-2 px-0" href="landing-house.html">Landing House <span class="badge badge-success ml-1">New</span></a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="landing-job.html">Landing Job <span class="badge badge-success ml-1">New</span></a></li>-->
+                          </ul>
+                          <!-- End Links -->
+
+                          <strong class="d-block mb-2">Blog</strong>
+
+                          <!-- Links -->
+                          <ul class="list-unstyled mb-4">
+                          <!--  <li><a class="nav-link u-list__link py-2 px-0" href="blog-agency.html">Blog Agency</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="blog-start-up.html">Blog Start-Up</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="blog-business.html">Blog Business</a></li>-->
+                          </ul>
+                          <!-- End Links -->
+
+                          <strong class="d-block mb-2">Portfolio</strong>
+
+                          <!-- Links -->
+
+                          <ul class="list-unstyled u-list">
+                            <li><a class="nav-link u-list__link py-2 px-0" href="portfolio-agency.html">Portfolio Agency</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="portfolio-profile.html">Portfolio Profile</a></li>
+                          </ul>
+                          <!-- End Links -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- End Home - Mega Menu -->
+              </li>
+              <div id="navBar" class="collapse navbar-collapse py-0">
+            <ul class="navbar-nav u-header__navbar-nav ml-lg-auto">
+              <!-- Home -->
+              <!--<li class="nav-item hs-has-mega-menu u-header__nav-item"
+                  data-event="hover"
+                  data-animation-in="slideInUp"
+                  data-animation-out="fadeOut"
+                  data-position="left">-->
+                <a id="homeMegaMenu" class="nav-link u-header__nav-link pl-0" href="../joblist/"
+                   aria-haspopup="true"
+                   aria-expanded="false">
+                  Jobs
+                 <!-- <span class="fa fa-angle-down u-header__nav-link-icon"></span>-->
                 </a>
 
-                <!-- Works - Mega Menu -->
-                <div class="hs-mega-menu w-100 u-header__sub-menu u-header__mega-menu-wrapper-v1" aria-labelledby="worksMegaMenu">
-                  <div class="row">
-                    <div class="col-sm-6 col-lg-3 mb-3 mb-lg-0">
-
-                      <strong class="d-block mb-2">Available for You</strong>
-
-                      <!-- Links -->
-                      <ul class="list-unstyled u-list">
-						  {% if user.is_authenticated %}
-						    {% if user.freelancer == True %}
-						  <li><a class="nav-link u-list__link py-2 px-0" href="../joblist/">Jobs available</a></li>
-						   {% endif %}
-						  {% endif %}
-						  {% if user.is_authenticated %}
-						   {% if user.jopublisher == True %}
-						  <li><a class="nav-link u-list__link py-2 px-0" href="../profilelist/">Freelancer list</a></li>
-						   {% endif %}
-						  {% endif %}
-						  {% if user.is_authenticated == False %}
-						   <a class="nav-link u-list__link px-4" href="../joblist/">- Available jobs</a>
-						  <a class="nav-link u-list__link px-4" href="../profilelist/">- Available freelancer</a>
-
-                          {% endif %}
-                        <!--<li><a class="nav-link u-list__link py-2 px-0" href="../arts-crafts/">Art and Design</a></li>
-                      <!--  <li><a class="nav-link u-list__link py-2 px-0" href="#">Career & jobs</a></li>
-                        <li><a class="nav-link u-list__link py-2 px-0" href="#">Food & Drinks</a></li>
-                        <li><a class="nav-link u-list__link py-2 px-0" href="#">Events & lifestyle</a></li>
-
-                      </ul>
-                      <!-- End Links -->
+                <!-- Home - Mega Menu -->
+                <div class="hs-mega-menu u-header__sub-menu w-100 u-header__mega-menu-wrapper-v2" aria-labelledby="homeMegaMenu">
+                  <div class="row p-0 mr-0">
+                    <div class="col-lg-6 pr-0">
+                      <!-- Banner Image -->
+                      <div class="d-none d-lg-block u-header__banner-v1" data-bg-img-src="{% static 'assets/img/750x750/img1.jpg' %}">
+                        <div class="w-100 text-center u-header__banner-v1-content u-content-centered-y p-4">
+                          <div class="mb-4">
+                            <strong class="d-block u-header__banner-v1-title mb-2">Branding Works</strong>
+                            <span class="u-header__banner-v1-text">Experience a level of our quality in both design &amp; customization works.</span>
+                          </div>
+                          <a class="btn btn-primary u-btn-primary btn-sm transition-3d-hover" href="#">Learn More <span class="fa fa-angle-right ml-2"></span></a>
+                        </div>
+                      </div>
+                      <!-- End Banner Image -->
                     </div>
-<!--
-                    <div class="col-sm-6 col-lg-3 mb-3 mb-lg-0">
+
+                    <div class="col-lg-6 u-header__mega-menu-wrapper-v3">
+                      <div class="row u-header__mega-menu-wrapper-v1">
+                        <div class="col-sm-6">
+                          <strong class="d-block mb-2">Classic</strong>
+
+                          <!-- Links -->
+                          <ul class="list-unstyled mb-4">
+                           <!-- <li><a class="nav-link u-list__link py-2 px-0" href="index.html">Classic Agency</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="classic-crypto.html">Classic Crypto</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="classic-business.html">Classic Business</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="classic-marketing.html">Classic Marketing</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="classic-consulting.html">Classic Consulting</a></li>-->
+                          </ul>
+                          <!-- End Links -->
+
+                          <strong class="d-block mb-2">Corporate</strong>
+
+                          <!-- Links -->
+                          <ul class="list-unstyled mb-4">
+                         <!--   <li><a class="nav-link u-list__link py-2 px-0" href="corporate-agency.html">Corporate Agency</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="corporate-start-up.html">Corporate Start-Up</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="corporate-business.html">Corporate Business <span class="badge badge-success ml-1">New</span></a></li>-->
+                          </ul>
+                          <!-- End Links -->
+                        </div>
+
+                        <div class="col-sm-6">
+                          <strong class="d-block mb-2">Landing</strong>
+
+                          <!-- Links -->
+                          <ul class="list-unstyled mb-4">
+                          <!--  <li><a class="nav-link u-list__link py-2 px-0" href="landing-house.html">Landing House <span class="badge badge-success ml-1">New</span></a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="landing-job.html">Landing Job <span class="badge badge-success ml-1">New</span></a></li>-->
+                          </ul>
+                          <!-- End Links -->
+
+                          <strong class="d-block mb-2">Blog</strong>
+
+                          <!-- Links -->
+                          <ul class="list-unstyled mb-4">
+                          <!--  <li><a class="nav-link u-list__link py-2 px-0" href="blog-agency.html">Blog Agency</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="blog-start-up.html">Blog Start-Up</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="blog-business.html">Blog Business</a></li>-->
+                          </ul>
+                          <!-- End Links -->
+
+                          <strong class="d-block mb-2">Portfolio</strong>
+
+                          <!-- Links -->
+
+                          <ul class="list-unstyled u-list">
+                            <li><a class="nav-link u-list__link py-2 px-0" href="portfolio-agency.html">Portfolio Agency</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="portfolio-profile.html">Portfolio Profile</a></li>
+                          </ul>
+                          <!-- End Links -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- End Home - Mega Menu -->
+              </li>
+
+
+
+
+
+
+
+
+                 <!--   <div class="col-sm-6 col-lg-3 mb-3 mb-lg-0">
                       <strong class="d-block mb-2">Full Width Layouts</strong>
 
                       <!-- Links -->
@@ -785,39 +1037,109 @@
                       </ul>
                       <!-- End Links -->
                     <!--</div>-->
-                  </div>
-                </div>
-                <!-- End Works - Mega Menu -->
-              </li>
+
               <!-- End Works -->
 
               <!-- Blog -->
-				<li class="nav-item hs-has-mega-menu u-header__nav-item"
+				<ul class="navbar-nav u-header__navbar-nav ml-lg-auto">
+              <!-- Home -->
+              <!--<li class="nav-item hs-has-mega-menu u-header__nav-item"
                   data-event="hover"
                   data-animation-in="slideInUp"
                   data-animation-out="fadeOut"
-                  data-position="right">
-                <a id="worksMegaMenu" class="nav-link u-header__nav-link" href="javascript:;"
+                  data-position="left">-->
+
+                 <a id="homeMegaMenu" class="nav-link u-header__nav-link pl-0" href="../blogging/"
                    aria-haspopup="true"
                    aria-expanded="false">
-                  Blog
-                  <span class="fa fa-angle-down u-header__nav-link-icon"></span>
+                  Blogs
+                 <!-- <span class="fa fa-angle-down u-header__nav-link-icon"></span>-->
                 </a>
-
-                <!-- Works - Mega Menu -->
-                <div class="hs-mega-menu w-100 u-header__sub-menu u-header__mega-menu-wrapper-v1" aria-labelledby="worksMegaMenu">
-                  <div class="row">
-                    <div class="col-sm-6 col-lg-3 mb-3 mb-lg-0">
-                      <!--<strong class="d-block mb-2">Boxed Layouts</strong>
+                  <!-- Account -->
 
 
-                      <!-- Links -->
-                      <ul class="list-unstyled u-list">
-                        <li><a class="nav-link u-list__link py-2 px-0" href="../blogging/">Blogs List </a></li>
 
-                      </ul>
-                      <!-- End Links -->
+
+
+                <!-- Home - Mega Menu -->
+                <div class="hs-mega-menu u-header__sub-menu w-100 u-header__mega-menu-wrapper-v2" aria-labelledby="homeMegaMenu">
+                  <div class="row p-0 mr-0">
+                    <div class="col-lg-6 pr-0">
+                      <!-- Banner Image -->
+                      <div class="d-none d-lg-block u-header__banner-v1" data-bg-img-src="{% static 'assets/img/750x750/img1.jpg' %}">
+                        <div class="w-100 text-center u-header__banner-v1-content u-content-centered-y p-4">
+                          <div class="mb-4">
+                            <strong class="d-block u-header__banner-v1-title mb-2">Branding Works</strong>
+                            <span class="u-header__banner-v1-text">Experience a level of our quality in both design &amp; customization works.</span>
+                          </div>
+                          <a class="btn btn-primary u-btn-primary btn-sm transition-3d-hover" href="#">Learn More <span class="fa fa-angle-right ml-2"></span></a>
+                        </div>
+                      </div>
+                      <!-- End Banner Image -->
                     </div>
+
+                    <div class="col-lg-6 u-header__mega-menu-wrapper-v3">
+                      <div class="row u-header__mega-menu-wrapper-v1">
+                        <div class="col-sm-6">
+                          <strong class="d-block mb-2">Classic</strong>
+
+                          <!-- Links -->
+                          <ul class="list-unstyled mb-4">
+                           <!-- <li><a class="nav-link u-list__link py-2 px-0" href="index.html">Classic Agency</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="classic-crypto.html">Classic Crypto</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="classic-business.html">Classic Business</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="classic-marketing.html">Classic Marketing</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="classic-consulting.html">Classic Consulting</a></li>-->
+                          </ul>
+                          <!-- End Links -->
+
+                          <strong class="d-block mb-2">Corporate</strong>
+
+                          <!-- Links -->
+                          <ul class="list-unstyled mb-4">
+                         <!--   <li><a class="nav-link u-list__link py-2 px-0" href="corporate-agency.html">Corporate Agency</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="corporate-start-up.html">Corporate Start-Up</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="corporate-business.html">Corporate Business <span class="badge badge-success ml-1">New</span></a></li>-->
+                          </ul>
+                          <!-- End Links -->
+                        </div>
+
+                        <div class="col-sm-6">
+                          <strong class="d-block mb-2">Landing</strong>
+
+                          <!-- Links -->
+                          <ul class="list-unstyled mb-4">
+                          <!--  <li><a class="nav-link u-list__link py-2 px-0" href="landing-house.html">Landing House <span class="badge badge-success ml-1">New</span></a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="landing-job.html">Landing Job <span class="badge badge-success ml-1">New</span></a></li>-->
+                          </ul>
+                          <!-- End Links -->
+
+                          <strong class="d-block mb-2">Blog</strong>
+
+                          <!-- Links -->
+                          <ul class="list-unstyled mb-4">
+                          <!--  <li><a class="nav-link u-list__link py-2 px-0" href="blog-agency.html">Blog Agency</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="blog-start-up.html">Blog Start-Up</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="blog-business.html">Blog Business</a></li>-->
+                          </ul>
+                          <!-- End Links -->
+
+                          <strong class="d-block mb-2">Portfolio</strong>
+
+                          <!-- Links -->
+
+                          <ul class="list-unstyled u-list">
+                            <li><a class="nav-link u-list__link py-2 px-0" href="portfolio-agency.html">Portfolio Agency</a></li>
+                            <li><a class="nav-link u-list__link py-2 px-0" href="portfolio-profile.html">Portfolio Profile</a></li>
+                          </ul>
+                          <!-- End Links -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- End Home - Mega Menu -->
+              </li>
               <!--<li class="nav-item hs-has-sub-menu u-header__nav-item"
                   data-event="hover"
                   data-animation-in="slideInUp"
@@ -1068,7 +1390,7 @@
               <li class="nav-item d-none d-md-inline-block pl-3 pr-0">
 				  {% if user.is_authenticated %}
 				    {% if user.jopublisher == True %}
-                <a class="btn btn-sm btn-primary u-btn-primary transition-3d-hover" href="../ad-jobs/" target="_blank">
+                <a class="btn btn-sm btn-primary u-btn-primary transition-3d-hover" href="../ad-jobs/" >
                   Post Job
                 </a>
 
@@ -1076,7 +1398,7 @@
 				  {% endif %}
 				  {% if user.is_authenticated %}
 				    {% if user.freelancer == True %}
-                <a class="btn btn-sm btn-primary u-btn-primary transition-3d-hover" href="../joblist/" target="_blank">
+                <a class="btn btn-sm btn-primary u-btn-primary transition-3d-hover" href="../joblist/" >
                   Apply for job
                 </a>
 
@@ -1143,6 +1465,7 @@
 
 
                 <div class="js-focus-state input-group u-form u-form--no-addon-brd">
+
                   <input id="keywordInput" class="form-control u-form__input" type="text" placeholder="Keyword or title" aria-label="Keyword or title" name="title">
                   <div class="input-group-append u-form__append">
                     <span class="input-group-text u-form__text">
@@ -1156,19 +1479,19 @@
               <div class="col-lg-5 mb-4 mb-lg-0">
                 <!-- Input -->
 
-                <label class="d-block" for="locationInput">
+                <label class="d-block" for="ranking-info">
                   <span class="h4 d-block text-dark font-weight-bold mb-0">location</span>
                   <span class="d-block font-size-13 text-secondary">city, state, or zip code</span>
                 </label>
 
 
                 <div class="js-focus-state input-group u-form u-form--no-addon-brd">
-                  <input id="locationInput" class="form-control u-form__input" type="text" placeholder="City, state, or zip" aria-label="City, state, or zip" name="location">
-                  <div class="input-group-append u-form__append">
+                  <input id="ranking-info" class="form-control" type="search" placeholder="City, state, or zip" aria-label="City, state, or zip" name="location">
+                 <!-- <div class="input-group-append u-form__append">
                     <span class="input-group-text u-form__text">
                       <span class="fa fa-map-marker-alt u-form__text-inner"></span>
                     </span>
-                  </div>
+                  </div>-->
                 </div>
                 <!-- End Input -->
               </div>
@@ -1217,16 +1540,18 @@
 			  {% for item in jobs %}
             <article class="bg-white shadow-sm mb-3">
               <div class="position-relative">
+
 				  {% thumbnail item.images 349x230 crop as thumb %}
                 <img class="img-fluid w-100 rounded-top" src="{{ thumb.url }} " width="{{ thumb.width }}" height="{{ thumb.height }}" alt="Image Description">
                 <header class="position-absolute-top-0 p-5">
-                  <a class="media align-items-center text-white" href="#">
+                  <a class="media align-items-center text-white" href="{% url 'job_with_pk' pk=item.pk  %}">
                     <div class="d-flex mr-2">
+
 						{% thumbnail item.jobprofile.profileimage 100x100 crop as thumb %}
                       <img class="img-fluid u-sm-avatar rounded-circle" src="{{ thumb.url }} " width="{{ thumb.width }}" height="{{ thumb.height }}" alt="Image Description">
                     </div>
                     <div class="media-body">
-                      <span class="text-white">{{ item.type }}</span>
+						<span class="text-white">{{ item.type }}</span>
                     </div>
                   </a>
                 </header>
@@ -1237,12 +1562,14 @@
 
               <div class="rounded-bottom p-5">
                 <h4 class="h6">
-                  <a href="#"> {{ item.city }} </a>
+                  <a href="{% url 'job_with_pk' pk=item.pk  %}"> {{ item.city }} </a>
                 </h4>
                 <span class="fa fa-map-marker-alt text-danger mr-2"></span>
-                <a class="text-secondary" href="#">{{ item.location }}</a>
+                <a class="text-secondary" href="{% url 'job_with_pk' pk=item.pk  %}">{{ item.location }}</a>
               </div>
             </article>
+
+
             <!-- End House Items -->
 			  {% endfor %}
           </div>
@@ -1587,7 +1914,7 @@
     <!-- End Testimonials -->
 
     <!-- Clients Section -->
-    <div class="container u-space-2">
+  <!--  <div class="container u-space-2">
       <div class="js-slick-carousel u-slick"
            data-autoplay="true"
            data-speed="5000"
@@ -1647,28 +1974,28 @@
     </div>
     <!-- End Clients Section -->
 
-    <hr class="my-0">
+   <!-- <hr class="my-0">
 <!--
   <!-- Divider -->
-    <div class="container">
+  <!--  <div class="container">
       <hr class="my-0">
     </div>
      <div class="u-bg-light-blue-50">
       <div class="container u-space-3">
         <!-- Title -->
-        <div class="w-md-60 w-lg-35 text-center mx-auto mb-9">
+      <!--  <div class="w-md-60 w-lg-35 text-center mx-auto mb-9">
           <h2 class="h5 font-weight-normal">
             Want to find the someone best for your job <span class="text-primary font-weight-bold">Front.</span>
           </h2>
         </div>
         <!-- End Title -->
 
-        <div class="row justify-content-lg-center">
+       <!-- <div class="row justify-content-lg-center">
           <div class="col-md-6 col-lg-5 mb-7 mb-md-0">
             <!-- Icon Block -->
-            <article class="bg-white text-center border rounded p-7">
+           <!-- <article class="bg-white text-center border rounded p-7">
               <!-- SVG Icon -->
-              <figure class="w-75 mx-auto mb-6">
+             <!-- <figure class="w-75 mx-auto mb-6">
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                      viewBox="0 0 149.5 116.1" style="enable-background:new 0 0 149.5 116.1;" xml:space="preserve">
                   <path class="u-fill-light-blue-50" d="M74.8,0.4C33.5,0.4,0,33.9,0,75.1c0,15,4.5,29,12.1,40.8h125.3c7.6-11.7,12.1-25.7,12.1-40.8
@@ -1821,7 +2148,7 @@
               </figure>
               <!-- End SVG Icon -->
     <!-- End Divider -->
-<h3 class="h4 mb-3">I'm a Jobpublisher</h3>
+<!--<h3 class="h4 mb-3">I'm a Jobpublisher</h3>
               <p class="mb-4">Find out how you can get best person for your job.</p>
               <a class="btn u-btn-danger--air transition-3d-hover" href="#">
                 Find Freelancer
@@ -1831,11 +2158,11 @@
             <!-- End Icon Block -->
           </div>
 
-          <div class="col-md-6 col-lg-5 mb-7 mb-md-0">
+         <!-- <div class="col-md-6 col-lg-5 mb-7 mb-md-0">
             <!-- Icon Block -->
-            <article class="bg-white text-center border rounded p-7">
+          <!--  <article class="bg-white text-center border rounded p-7">
               <!-- SVG Icon -->
-              <figure class="w-75 mx-auto mb-6">
+            <!--  <figure class="w-75 mx-auto mb-6">
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                      viewBox="0 0 149.5 116.1" style="enable-background:new 0 0 149.5 116.1;" xml:space="preserve">
                   <path class="u-fill-light-blue-50" d="M74.8,0.4C33.5,0.4,0,33.9,0,75.1c0,15,4.5,29,12.1,40.8h125.3c7.6-11.7,12.1-25.7,12.1-40.8
@@ -2127,7 +2454,7 @@
               </figure>
               <!-- End SVG Icon -->
 
-              <h3 class="h4 mb-3">I'm a Freelancer</h3>
+             <!-- <h3 class="h4 mb-3">I'm a Freelancer</h3>
               <p class="mb-4">Ensure you find the right Job, near you.</p>
               <a class="btn u-btn-primary--air transition-3d-hover" href="#">
                 Find a Job
@@ -2135,7 +2462,7 @@
               </a>
             </article>
             <!-- End Icon Block -->
-          </div>
+         <!-- </div>
         </div>
       </div>
     </div>
@@ -2309,34 +2636,34 @@
     <!-- End Features Section -->
 
     <!-- Stats Section -->
-    <div class="container u-space-3-bottom">
+   <!-- <div class="container u-space-3-bottom">
       <div class="row justify-content-md-between">
         <div class="col-sm-6 offset-sm-3 col-lg-4 offset-lg-0 mb-7 mb-lg-0">
           <!-- Figures -->
-          <div class="text-center">
+      <!--    <div class="text-center">
             <h3 class="display-2 text-primary font-weight-bold">2M</h3>
             <p>2 million daily active users</p>
           </div>
           <!-- End Figures -->
-        </div>
+       <!-- </div>
 
         <div class="col-sm-6 col-lg-4 mb-7 mb-sm-0">
           <!-- Figures -->
-          <div class="text-center">
+        <!--  <div class="text-center">
             <h3 class="display-2 text-primary font-weight-bold">7k</h3>
             <p>Over 7k open job positions</p>
           </div>
           <!-- End Figures -->
-        </div>
+       <!-- </div>
 
         <div class="col-sm-6 col-lg-4">
           <!-- Figures -->
-          <div class="text-center">
+         <!-- <div class="text-center">
             <h3 class="display-2 text-primary font-weight-bold">10M</h3>
             <p>Over 10 million stories shared</p>
           </div>
           <!-- End Figures -->
-        </div>
+       <!-- </div>
       </div>
     </div>
     <!-- End Stats Section -->
@@ -2486,7 +2813,7 @@
 				  {% thumbnail item.samplework2 349x230 crop as thumb %}
                 <img class="img-fluid w-100 rounded-top" src="{{ thumb.url }} " width="{{ thumb.width }}" height="{{ thumb.height }}" alt="Image Description">
                 <header class="position-absolute-top-0 p-5">
-                  <a class="media align-items-center text-white" href="#">
+                  <a class="media align-items-center text-white" href="{% url 'profile_with_pk' pk=item.pk  %}">
                     <div class="d-flex mr-2">
 						{% thumbnail item.profileimage 100x100 crop as thumb %}
                       <img class="img-fluid u-sm-avatar rounded-circle" src="{{ thumb.url }} " width="{{ thumb.width }}" height="{{ thumb.height }}" alt="Image Description">
@@ -2503,10 +2830,10 @@
 
               <div class="rounded-bottom p-5">
                 <h4 class="h6">
-                  <a href="#"> {{ item.city }} </a>
+                  <a href="{% url 'profile_with_pk' pk=item.pk  %}"> {{ item.city }} </a>
                 </h4>
                 <span class="fa fa-map-marker-alt text-danger mr-2"></span>
-                <a class="text-secondary" href="#">{{ item.location }}</a>
+                <a class="text-secondary" href="{% url 'profile_with_pk' pk=item.pk  %}">{{ item.location }}</a>
               </div>
             </article>
             <!-- End House Items -->
@@ -2641,7 +2968,7 @@
 
         <!-- End Slick Carousel -->
 
-        <div class="text-center">
+       <!-- <div class="text-center">
           <a class="btn u-btn-primary--air u-btn-wide transition-3d-hover" href="#">View All Houses</a>
         </div>
       </div>
@@ -2649,13 +2976,13 @@
     <!-- End Houses Section -->
 
     <!-- Features Section -->
-    <div class="position-relative u-space-3 u-space-4--lg">
+  <!--  <div class="position-relative u-space-3 u-space-4--lg">
       <!-- SVG Mockups -->
-      <figure class="col-lg-6 position-absolute-top-left-0--lg u-content-centered-y--lg mb-9 mb-lg-0">
-        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+    <!--  <figure class="col-lg-6 position-absolute-top-left-0--lg u-content-centered-y--lg mb-9 mb-lg-0">
+       <!-- <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
              viewBox="0 0 999.1 577.5" style="enable-background:new 0 0 999.1 577.5;" xml:space="preserve">
           <!-- Laptop Frame -->
-          <path class="u-fill-white u-stroke-light-blue-125" stroke-miterlimit="10" d="M881.3,577H117.5c-14.4,0-26.2-11.8-26.2-26.2V26.7c0-14.4,11.8-26.2,26.2-26.2h763.9
+        <!--  <path class="u-fill-white u-stroke-light-blue-125" stroke-miterlimit="10" d="M881.3,577H117.5c-14.4,0-26.2-11.8-26.2-26.2V26.7c0-14.4,11.8-26.2,26.2-26.2h763.9
             c14.4,0,26.2,11.8,26.2,26.2v524.2C907.5,565.2,895.7,577,881.3,577z"/>
           <circle fill="#f7f7f7" cx="498" cy="23.8" r="3"/>
           <path class="u-fill-white" d="M996.3,561.2H2.9c-1.5,0-2.8-1.3-2.8-2.8l0,0c0-1.5,1.3-2.8,2.8-2.8h993.4c1.5,0,2.8,1.3,2.8,2.8l0,0
@@ -2680,14 +3007,14 @@
             </clipPath>
             <g style="clip-path:url(#laptopFrameID3);">
               <!-- Apply your (1618px width to 1010px height) image here -->
-              <image style="overflow:visible;" width="1618" height="1010" xlink:href="{% static 'assets/img/1618x1010/img2.jpg' %}" transform="matrix(0.4651 0 0 0.4651 121.7472 37.9679)"></image>
+             <!-- <image style="overflow:visible;" width="1618" height="1010" xlink:href="{% static 'assets/img/1618x1010/img2.jpg' %}" transform="matrix(0.4651 0 0 0.4651 121.7472 37.9679)"></image>
             </g>
             <use xlink:href="#laptopFrameID2" style="overflow:visible;fill:none;stroke:#E7EAF3;stroke-miterlimit:10;"/>
           </g>
           <!-- End Laptop Frame -->
 
           <!-- Phone Frame -->
-          <path class="u-fill-white u-stroke-light-blue-125" stroke-miterlimit="10" d="M944,577H823.1c-29.7,0-54-24.3-54-54V150.9c0-29.7,24.3-54,54-54H944c29.7,0,54,24.3,54,54V523
+        <!--  <path class="u-fill-white u-stroke-light-blue-125" stroke-miterlimit="10" d="M944,577H823.1c-29.7,0-54-24.3-54-54V150.9c0-29.7,24.3-54,54-54H944c29.7,0,54,24.3,54,54V523
             C998,552.7,973.7,577,944,577z"/>
           <circle fill="#f7f7f7" cx="884.3" cy="543.4" r="18.4"/>
           <path class="u-fill-gray-75" fill-rule="evenodd" clip-rule="evenodd" d="M899.1,133.7h-30.3c-1.6,0-2.9-1.3-2.9-2.9l0,0c0-1.6,1.3-2.9,2.9-2.9h30.3c1.6,0,2.9,1.3,2.9,2.9l0,0
@@ -2699,17 +3026,17 @@
             <clipPath id="phoneFrameID2">
               <use xlink:href="#phoneFrameID1" style="overflow:visible;"/>
             </clipPath>
-            <g style="clip-path:url(#phoneFrameID2);">
+           <!-- <g style="clip-path:url(#phoneFrameID2);">
               <!-- Apply your (282px width to 500px height) image here -->
-              <image style="overflow:visible;" width="282" height="500" xlink:href="{% static 'assets/img/282x500/img8.jpg' %}" transform="matrix(0.722 0 0 0.722 782.1237 155.3553)"></image>
+             <!-- <image style="overflow:visible;" width="282" height="500" xlink:href="{% static 'assets/img/282x500/img8.jpg' %}" transform="matrix(0.722 0 0 0.722 782.1237 155.3553)"></image>
             </g>
             <use xlink:href="#phoneFrameID1" style="overflow:visible;fill:none;stroke:#E7EAF3;stroke-miterlimit:10;"/>
           </g>
           <!-- End Phone Frame -->
-        </svg>
-      </figure>
+       <!-- </svg>-->
+    <!--  </figure>
       <!-- End SVG Mockups -->
-          </div>
+         <!-- </div>-->
         </div>
       </div>
     </div>
@@ -2828,7 +3155,7 @@
         <div class="col-sm-6 col-md-5 col-lg-3 order-lg-1">
           <div class="d-flex align-self-start flex-column h-100">
             <!-- Logo -->
-            <a class="d-inline-block mb-4" href="index.html" aria-label="Front">
+            <a class="d-inline-block mb-4" href="#" aria-label="Front">
               <img src="{% static 'assets/svg/logos/logo-white.svg' %}" alt="Logo" style="width: 120px;">
             </a>
             <!-- End Logo -->
@@ -3345,7 +3672,7 @@
   {% addtoblock "js" %}<script src="{% static 'assets/js/components/hs.fancybox.js' %}"></script>{% endaddtoblock %}
   {% addtoblock "js" %}<script src="{% static 'assets/js/components/hs.slick-carousel.js' %}"></script>{% endaddtoblock %}
   {% addtoblock "js" %}<script src="{% static 'assets/js/components/hs.go-to.js' %}"></script>{% endaddtoblock %}
-
+        {% addtoblock "js" %}<script src="https://cdn.jsdelivr.net/npm/places.js@1.16.4"></script>{% endaddtoblock %}
 	{% block js %}
   <!-- JS Plugins Init. -->
   <script>
@@ -3388,6 +3715,92 @@
       // initialization of go to
       $.HSCore.components.HSGoTo.init('.js-go-to');
     });
+
+    (function() {
+  function formatIcon(query) {
+    switch (query) {
+      case "worldwide_query":
+        // globe icon - result found while searching in the whole world (still respects filter restrictions)
+        return '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><path d="M10 0C4.48 0 0 4.48 0 10s4.48 10 10 10 10-4.48 10-10S15.52 0 10 0zM9 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L7 13v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H6V8h2c.55 0 1-.45 1-1V5h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>'
+      case "local_query":
+        // building icon - result found while searching in the country of the user (still respects filter restrictions)
+        return '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path d="M12 .6L2.5 6.9h18.9L12 .6zM3.8 8.2c-.7 0-1.3.6-1.3 1.3v8.8L.3 22.1c-.2.3-.3.5-.3.6 0 .6.8.6 1.3.6h21.5c.4 0 1.3 0 1.3-.6 0-.2-.1-.3-.3-.6l-2.2-3.8V9.5c0-.7-.6-1.3-1.3-1.3H3.8zm2.5 2.5c.7 0 1.1.6 1.3 1.3v7.6H5.1V12c0-.7.5-1.3 1.2-1.3zm5.7 0c.7 0 1.3.6 1.3 1.3v7.6h-2.5V12c-.1-.7.5-1.3 1.2-1.3zm5.7 0c.7 0 1.3.6 1.3 1.3v7.6h-2.5V12c-.1-.7.5-1.3 1.2-1.3z"/></svg>'
+      case "geo_query":
+        // pin icon - result found while searching near location of the user (still respects filter restrictions)
+        return '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 14 20"><path d="M7 0C3.13 0 0 3.13 0 7c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5C5.62 9.5 4.5 8.38 4.5 7S5.62 4.5 7 4.5 9.5 5.62 9.5 7 8.38 9.5 7 9.5z"/></svg>'
+      default:
+        return '';
+    }
+  }
+
+  function formatName (highlight) {
+    var name = highlight.name;
+    return name;
+  }
+
+  function formatAddress (address) {
+    var suburb = address.suburb;
+    var city = address.city;
+    var postcode = address.postcode;
+    var administrative = address.administrative;
+    var country = address.country;
+    return [ suburb, city, postcode, administrative, country ]
+      .filter(function(v) { return !!v })
+      .join(', ')
+  }
+
+  function formatPrecision (type, roadNumberPrecision) {
+    if (type === 'city') {
+      // 0 circle - city level precision
+      return '';
+    }
+
+    switch (roadNumberPrecision) {
+      case "exact":
+        // 3 circles - house level precision
+        return '<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">' +
+  '<circle r="12" cy="16" cx="16" fill="#ddd"/>' +
+  '<circle r="8" cy="16" cx="16" fill="#aaa"/>' +
+  '<circle r="4" cy="16" cx="16" fill="#000"/>' +
+'</svg>';
+      case "closest":
+        // 2 circles - house number not found - returned geolocation of the closest house number.
+        return '<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">' +
+  '<circle r="12" cy="16" cx="16" fill="#ddd"/>' +
+  '<circle r="8" cy="16" cx="16" fill="#aaa"/>' +
+'</svg>';
+      default:
+        // 1 circle - street level precision
+        return '<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">' +
+  '<circle r="12" cy="16" cx="16" fill="#ddd"/>' +
+'</svg>';
+    }
+  }
+
+  function formatSuggestion (suggestion) {
+    var highlight = suggestion.highlight;
+    var _rankingInfo = suggestion.hit._rankingInfo;
+    var type = suggestion.type;
+
+    return '<div class="suggestion">' +
+      '<span class="suggestion-icon">' + formatIcon(_rankingInfo.query) + '</span>' +
+      '<span class="suggestion-name">' + formatName(highlight) + '</span>' +
+      '<span class="suggestion-address">' + formatAddress(highlight) + '</span>' +
+      '<span class="suggestion-precision">' + formatPrecision(type, _rankingInfo.roadNumberPrecision) + '</span>' +
+    '</div>'
+  }
+
+  var placesAutocomplete = places({
+    appId: 'pl1AKTQR328T',
+    apiKey: '3c96460cb91f2915ffe65c37874c4f75',
+    container: document.querySelector('#ranking-info'),
+    templates: {
+      suggestion: formatSuggestion
+    }
+  }).configure({
+    getRankingInfo: true
+  });
+})();
   </script>
 {% endblock js %}
 </body>
